@@ -20,6 +20,8 @@
 
 `* * * * * laradock /usr/bin/php /var/www/ambar/artisan schedule:run >> /dev/null 2>&1`
 
+**IMPORTANTE: asegurarse de las line endings del archivo sean LF y no CRLF**
+
 #### Luego ir a la carpeta /laradock y correr el siguiente commando
 
 `docker-compose up -d nginx mysql`
