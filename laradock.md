@@ -1,8 +1,9 @@
-#### Dentro de una carpeta, clonar repo de laradock
-#### Dentro de la misma carpeta crear carpeta apps
-#### Dentro de la carpeta apps clonar el repo ambar
+#### Estructura (multiples proyectos)
+- Dentro de una carpeta, clonar repo de laradock
+- Dentro de la misma carpeta crear carpeta apps
+- Dentro de la carpeta apps clonar el repo ambar
 
-#### Copiar laradock/env-example en laradock/.env
+- Copiar laradock/env-example en laradock/.env
 
 #### Editar las siguientes variables en laradock/.env
 
