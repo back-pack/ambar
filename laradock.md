@@ -18,3 +18,15 @@
 #### Deberia quedar asi:
 
 `* * * * * laradock /usr/bin/php /var/www/ambar/artisan schedule:run >> /dev/null 2>&1`
+
+#### Luego ir a la carpeta /laradock y correr el siguiente commando
+
+`docker-compose up -d nginx mysql`
+
+*El mismo comando sirve para levantar laradock*
+
+#### Si se necesita compilar una imagen invidual de Laradock, correr el siguiente comando por ej. para compilar Workspace:
+
+`docker-compose build workspace`
+
+*Se le puede agregar --no-cache para compilar la imagen desde cero*
