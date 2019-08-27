@@ -33,3 +33,19 @@
 `docker-compose build workspace`
 
 *Se le puede agregar --no-cache para compilar la imagen desde cero*
+
+
+#### Agregar app dominio local
+
+Editar el archivo de hosts
+- En Windows la ruta del archivo es Windows/System32/drivers/etc/hosts
+- En Linux la ruta del archivos es /etc/hosts
+
+Agregar la siguiente linea:
+`127.0.0.1 ambar.local`
+
+*En Windows ejectura el notepad como administrador*
+
+En la carpeta laradock/nginx/sites copiar laravel.conf.example y renombrar como ambar.local.conf
+
+En el archivo ambar.local.conf reemplazar todas las ocurrencias de la palabra "laravel" por "ambar"
