@@ -1,0 +1,27 @@
+
+
+   views
+     +->article
+     |  +----->index                +---------------------------+
+     |  +----->create               |                           |
+     |  +----->edit / remove        |   Arbol de vistas         |
+     |                              |                           |
+     +->markup                      |                           |
+     |  +----->index                |                           |
+     |  +----->create               |                           |
+     |  +----->edit / remove        |                           |
+     |                              |                           |
+     +->users                       |                           |
+     |  +----->index                |                           |
+     |  +----->create               +---------------------------+
+     |  +----->edit / remove
+     |
+     +->clients
+     |  +----->index
+     |  +----->create
+     |  +----->edit / remove
+     |
+     +->orders
+        +----->index
+        +----->create
+        +----->edit / remove
