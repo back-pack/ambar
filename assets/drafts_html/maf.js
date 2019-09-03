@@ -6,3 +6,7 @@ function hide() {
         article_table_config[i].classList.toggle('collapse');
     }
 };
+
+function date_hide() {
+	$('#datee').toggle('hide');
+}
