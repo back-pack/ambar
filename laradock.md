@@ -1,5 +1,5 @@
 #### Estructura (multiples proyectos)
-- Dentro de una carpeta, clonar repo de laradock
+- Dentro de una carpeta, clonar repo de laradock: git clone https://github.com/laradock/laradock.git
 - Dentro de la misma carpeta crear carpeta apps
 - Dentro de la carpeta apps clonar el repo ambar
 
