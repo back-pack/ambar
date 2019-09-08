@@ -6,29 +6,34 @@
 
 @section('content')
 
-    <table class="table table-hover table-responsive-sm">
-      <thead class="thead-light">
-        <tr>
-          <th>ID</th>
-          <th>Nombre</th>
-          <th>Descripción</th>
-          <th>Precio</th>
-          <th>Ultima actualización</th>
-          <th>Acción</th>
-        </tr>
-      </thead>
-      <tbody>
-        @foreach ($articles as $article)
+
+    <div class="col-sm">
+      <p class='h2'>Articulos | <a href="{{ route('articles.create') }}" ><button onclick="alert('agrega articulo')" class="btn btn-sm btn-outline-success" type="button"><i class="fas fa-plus-square"></i></button></a> <button onclick="alert('Imprime lista')" class="btn btn-sm btn-outline-secondary" type="button"><i class="fas fa-print"></i></button> <button onclick="hide()" class="btn btn-sm btn-outline-primary" type="button"><i class="fas fa-tools"></i></button></p>
+      <table class="table table-hover table-responsive-sm">
+        <thead class="thead-light">
           <tr>
-            <td>{{ $article->id }}</td>
-            <td>{{ $article->name }}</td>
-            <td>{{ $article->description }}</td>
-            <td>{{ $article->price_formated }}</td>
-            <td>{{ $article->price_last_update->format('d/m/Y') }}</td>
-            <td><a href="{{ route('articles.edit', ['id' => $article->id]) }}">Editar</a></td>
+            <th scope="col">ID</th>
+            <th scope="col">Nombre</th>
+            <th scope="col">Descripción</th>
+            <th scope="col">Precio</th>
+            <th scope="col">Ultima actualización</th>
+            <th class="config" scope="col"><i class="fas fa-tools config"></i></th>
           </tr>
-        @endforeach
-      </tbody>
-    </table>
+        </thead>
+        <tbody>
+          @foreach ($articles as $article)
+            <tr>
+              <td scope="row">{{ $article->id }}</td>
+              <td>{{ $article->name }}</td>
+              <td>{{ $article->description }}</td>
+              <td>{{ $article->price_formated }}</td>
+              <td>{{ $article->price_last_update->format('d/m/Y') }}</td>
+              <td class='config'><a href="{{ route('articles.edit', ['id' => $article->id]) }}"><button type="button" class="btn btn-sm btn-outline-warning config"><i class="fas fa-wrench"></i></button></a></td>
+            </tr>
+          @endforeach
+        </tbody>
+      </table>
+    </div>
+
 
 @endsection
