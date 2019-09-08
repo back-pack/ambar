@@ -35,6 +35,8 @@
 
 #### Agregar app dominio local
 
+*En Windows ejectura el notepad como administrador*
+
 Editar el archivo de hosts
 - En Windows la ruta del archivo es Windows/System32/drivers/etc/hosts
 - En Linux la ruta del archivos es /etc/hosts
@@ -42,9 +44,7 @@ Editar el archivo de hosts
 Agregar la siguiente linea:
 `127.0.0.1 ambar.test`
 
-*En Windows ejectura el notepad como administrador*
-
-En la carpeta laradock/nginx/sites copiar laravel.conf.example y renombrar como ambar.test.conf
+#### En la carpeta laradock/nginx/sites copiar laravel.conf.example y renombrar como ambar.test.conf
 
 En el archivo ambar.local.conf reemplazar todas las ocurrencias de la palabra "laravel" por "ambar"
 
@@ -69,11 +69,7 @@ Una vez adentro de workspace ingresar a la carpeta ambar
 
 `cd ambar`
 
-Adentro del directorio de la aplicacion generar la APP_KEY de Laravel con el siguiente comando
-
-`php artisan key:generate`
-
-Copiar el archivo .env.example y nombrarlo .env
+Copiar el archivo .env.example y nombrarlo .env    <<   editar .env antes de `php artisan key:generate`  (maf)
 
 `cp .env.example .env`
 
@@ -85,3 +81,8 @@ Editar .env y fijarse que los siguientes datos esten de esta manera:
 - DB_DATABASE=ambar
 - DB_USERNAME=default
 - DB_PASSWORD=secret
+
+Adentro del directorio de la aplicacion generar la APP_KEY de Laravel con el siguiente comando
+
+`php artisan key:generate`    <<    me tiro faltante la carpeta vendor, hice un `composer install` y avanzó  (maf)
+
