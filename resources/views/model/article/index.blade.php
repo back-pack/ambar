@@ -6,36 +6,34 @@
 
 @section('content')
 
-    <h2>Artículos</h2>
-    <hr>
 
-    <div class="table-responsive">
-      <table class="table table-hover">
+    <div class="col-sm">
+      <p class='h2'>Articulos | <a href="{{ route('articles.create') }}" ><button class="btn btn-sm btn-outline-success" type="button"><i class="fas fa-plus-square"></i></button></a> <button onclick="alert('Imprime lista')" class="btn btn-sm btn-outline-secondary" type="button"><i class="fas fa-print"></i></button> <button onclick="hide()" class="btn btn-sm btn-outline-primary" type="button"><i class="fas fa-tools"></i></button></p>
+      <table class="table table-hover table-responsive-sm">
         <thead class="thead-light">
           <tr>
-            <th>ID</th>
-            <th>Nombre</th>
-            <th>Descripción</th>
-            <th>Peso</th>
-            <th>Costo</th>
-            <th>Ultima actualización</th>
-            <th>Acción</th>
+            <th scope="col">ID</th>
+            <th scope="col">Nombre</th>
+            <th scope="col">Descripción</th>
+            <th scope="col">Precio</th>
+            <th scope="col">Ultima actualización</th>
+            <th class="config" scope="col"><i class="fas fa-tools config"></i></th>
           </tr>
         </thead>
         <tbody>
           @foreach ($articles as $article)
             <tr>
-              <td>{{ $article->id }}</td>
+              <td scope="row">{{ $article->id }}</td>
               <td>{{ $article->name }}</td>
               <td>{{ $article->description }}</td>
-              <td>{{ $article->weight }}kg</td>
-              <td>{{ $article->cost_formated }}</td>
-              <td>{{ $article->cost_last_update->format('d/m/Y') }}</td>
-              <td><a href="{{ route('articles.edit', ['id' => $article->id]) }}">Editar</a></td>
+              <td>{{ $article->price_formated }}</td>
+              <td>{{ $article->price_last_update->format('d/m/Y') }}</td>
+              <td class='config'><a href="{{ route('articles.edit', ['id' => $article->id]) }}"><button type="button" class="btn btn-sm btn-outline-warning config"><i class="fas fa-wrench"></i></button></a></td>
             </tr>
           @endforeach
         </tbody>
       </table>
     </div>
+
 
 @endsection
