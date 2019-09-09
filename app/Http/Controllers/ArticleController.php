@@ -39,10 +39,11 @@ class ArticleController extends Controller
         $attributes = $request->validate([
             'name' => ['required'],
             'description' => ['required'],
-            'price' => ['required']
+            'cost' => ['required'],
+            'weight' => ['required']
         ]);
 
-        $attributes['price_last_update'] = now();
+        $attributes['cost_last_update'] = now();
 
         Article::create($attributes);
 
@@ -82,12 +83,13 @@ class ArticleController extends Controller
     {
         $attributes = $request->validate([
             'name' => ['required'],
-            'price' => ['required'],
-            'description' => ['required']
+            'cost' => ['required'],
+            'description' => ['required'],
+            'weight' => ['required']
         ]);
 
-        if ($request->input('price') !== $article->price) {
-            $attributes['price_last_update'] = now();
+        if ($request->input('cost') !== $article->cost) {
+            $attributes['cost_last_update'] = now();
         }
 
         $article->update($attributes);
@@ -103,6 +105,8 @@ class ArticleController extends Controller
      */
     public function destroy(Article $article)
     {
-        //
+        $article->delete();
+
+        return redirect(route('articles.index'));
     }
 }
