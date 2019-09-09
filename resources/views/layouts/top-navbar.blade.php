@@ -8,17 +8,23 @@
 
         <div class="collapse navbar-collapse" id="top-navbar-menu">
             <ul class="navbar-nav mr-auto">
-
-                <li class="nav-item dropdown">
-                    <a href="" class="nav-link dropdown-toggle" role="button" data-toggle="dropdown">Articulos</a>
-                    <div class="dropdown-menu">
-                        <a href="{{ route('articles.index') }}" class="dropdown-item">Ver todos</a>
-                        <a href="{{ route('articles.create') }}" class="dropdown-item">Ingresar nuevo</a>
-                    </div>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Pedidos</a>
                 </li>
-
+                <li class="nav-item active">
+                    <a class="nav-link" href="{{ route('articles.index') }}">Articulos</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Admin</a>
+                <div class="dropdown-menu" aria-labelledby="dropdown01">
+                <a class="dropdown-item" href="#">Markup</a>
+                <a class="dropdown-item" href="#">Clientes</a>
+                <a class="dropdown-item" href="#">Usuarios</a>
+                </div>
+                </li>
             </ul>
+            <spam class="navbar-text nav-link">Hola $USER</spam>
+            <button type="button" class="btn btn-outline-secondary" alt="salir"><i class="fas fa-sign-out-alt"></i></button>
         </div>
-
     </div>
 </nav>
