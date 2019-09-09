@@ -6,17 +6,17 @@ use Illuminate\Database\Eloquent\Model;
 
 class Article extends Model
 {
-    protected $fillable = ['name', 'description', 'price', 'price_last_update'];
+    protected $fillable = ['name', 'description', 'cost', 'cost_last_update', 'weight'];
 
-    protected $dates = ['price_last_update'];
+    protected $dates = ['cost_last_update'];
 
     /**
      * Accessors & Mutators
      */
 
-    public function getPriceFormatedAttribute()
+    public function getCostFormatedAttribute()
     {
-        return '$' . number_format($this->attributes['price'], 2, ',', '.');
+        return '$' . number_format($this->attributes['cost'], 2, ',', '.');
     }
 
 }
