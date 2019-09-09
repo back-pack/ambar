@@ -17,8 +17,9 @@ class CreateArticlesTable extends Migration
             $table->bigIncrements('id');
             $table->string('name');
             $table->text('description');
-            $table->decimal('price', 8, 2);
-            $table->date('price_last_update');
+            $table->decimal('cost', 8, 2);
+            $table->date('cost_last_update');
+            $table->decimal('weight', 8, 2);
             $table->timestamps();
         });
     }
