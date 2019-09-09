@@ -15,7 +15,7 @@
             <th scope="col">ID</th>
             <th scope="col">Nombre</th>
             <th scope="col">Descripción</th>
-            <th scope="col">Precio</th>
+            <th scope="col">Costo</th>
             <th scope="col">Ultima actualización</th>
             <th class="config" scope="col"><i class="fas fa-tools config"></i></th>
           </tr>
@@ -26,8 +26,8 @@
               <td scope="row">{{ $article->id }}</td>
               <td>{{ $article->name }}</td>
               <td>{{ $article->description }}</td>
-              <td>{{ $article->price_formated }}</td>
-              <td>{{ $article->price_last_update->format('d/m/Y') }}</td>
+              <td>{{ $article->cost_formated }}</td>
+              <td>{{ $article->cost_last_update->format('d/m/Y') }}</td>
               <td class='config'><a href="{{ route('articles.edit', ['id' => $article->id]) }}"><button type="button" class="btn btn-sm btn-outline-warning config"><i class="fas fa-wrench"></i></button></a></td>
             </tr>
           @endforeach
