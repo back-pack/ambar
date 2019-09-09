@@ -23,7 +23,7 @@
                 </div>
                 </li>
             </ul>
-            <spam class="navbar-text nav-link">Hola $USER</spam>
+            <span class="navbar-text nav-link">Hola $USER</span>
             <button type="button" class="btn btn-outline-secondary" alt="salir"><i class="fas fa-sign-out-alt"></i></button>
         </div>
     </div>
