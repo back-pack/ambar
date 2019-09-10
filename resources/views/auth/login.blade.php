@@ -1,9 +1,38 @@
 @extends('layouts.app')
 
+@section('title')
+    <title>Login</title>
+@endsection
+
+
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
+            <div class="patterns">
+                <div class="contain_pat">
+                  <css-doodle grid="3" #4>
+                    background: @p(#FFF4E0, #d2565e, #4402a4, #e5937b, #bb6a93);
+                    :after {
+                      content: '';
+                      @size: 100%;
+                      position: absolute;
+                      background:
+                        @m(4, radial-gradient(
+                          circle at @p(-40% -40%, 140% 140%, 140%  -40%, -40% 140%),
+                          @p(#FFF4E0, #d2565e, #4402a4, #e5937b, #bb6a93) 50%,
+                          transparent 50%
+                        )),
+                        radial-gradient(
+                          @p(#FFF4E0, #d2565e, #4402a4, #e5937b, #bb6a93) @r(10%, 40%),
+                          transparent 0
+                        )
+                    }
+                  </css-doodle>
+                </div>
+                <h2 style="font-size: 3.1rem;line-height: 1;font-weight: 100;font-style: normal; padding: .75rem 1.25rem;">Ambar</h2>
+            </div>
+
             <div class="card">
                 <div class="card-header">{{ __('Login') }}</div>
 

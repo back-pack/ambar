@@ -23,7 +23,9 @@
                 </div>
                 </li>
             </ul>
-            <span class="navbar-text nav-link">Hola $USER</span>
+            <span class="navbar-text nav-link">
+                {{-- {{ Auth::user()->name }} --}} $user
+            </span>
             <button type="button" class="btn btn-outline-secondary" alt="salir"><i class="fas fa-sign-out-alt"></i></button>
         </div>
     </div>
