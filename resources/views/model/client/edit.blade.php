@@ -1,0 +1,38 @@
+@extends('layouts.master')
+
+@section('title')
+    <title>Editar cliente</title>
+@endsection
+
+@section('content')
+
+    <form method="post" action="{{ route('clients.update', ['id' => $client->id]) }}">
+        @csrf
+        @method('patch')
+
+        @input([
+            'name' => 'name',
+            'label' => 'Nombre',
+            'attributes' => ['type' => 'text'],
+            'value' => $client->name
+        ])
+
+        @input([
+            'name' => 'email',
+            'label' => 'Correo electrónico',
+            'attributes' => ['type' => 'email'],
+            'value' => $client->email
+        ])
+
+        @select([
+            'name' => 'margin_id',
+            'label' => 'Margen',
+            'options' => $margins,
+            'value' => $client->margin_id
+        ])
+
+        <button type="submit" class="btn btn-primary">Editar cliente</button>
+
+    </form>
+
+@endsection
