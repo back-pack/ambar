@@ -26,7 +26,7 @@
               <td scope="row">{{ $article->id }}</td>
               <td>{{ $article->name }}</td>
               <td>{{ $article->description }}</td>
-              <td>{{ $article->cost_formated }}</td>
+              <td>{{ number_readable($article->cost, "$") }}</td>
               <td>{{ $article->cost_last_update->format('d/m/Y') }}</td>
               <td class='config'><a href="{{ route('articles.edit', ['id' => $article->id]) }}"><button type="button" class="btn btn-sm btn-outline-warning config"><i class="fas fa-wrench"></i></button></a></td>
             </tr>
