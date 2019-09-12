@@ -3,8 +3,10 @@
 use Illuminate\Http\Request;
 use App\Article;
 use App\Client;
+use App\Order;
 use App\Http\Resources\Article as ArticleResource;
 use App\Http\Resources\Client as ClientResource;
+use App\Http\Resources\Order as OrderResource;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,6 +21,10 @@ use App\Http\Resources\Client as ClientResource;
 
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
+});
+
+Route::get('orders/{order}', function (Order $order) {
+    return new OrderResource($order);
 });
 
 Route::get('articles', function (Request $request) {
