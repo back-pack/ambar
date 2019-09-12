@@ -19,6 +19,7 @@ Route::resource('clients', 'ClientController');
 Route::resource('margins', 'MarginController');
 Route::resource('orders', 'OrderController');
 Route::resource('articles', 'ArticleController');
+Route::resource('users', 'UserController');
 
 Auth::routes();
 
