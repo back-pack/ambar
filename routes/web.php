@@ -14,9 +14,13 @@
 Route::get('/', function () {
     return view('welcome');
 });
-
+// Articles
 Route::resource('articles', 'ArticleController');
 
 Auth::routes();
 
+// Home
 Route::get('/home', 'HomeController@index')->name('home');
+
+// User
+Route::resource('users', 'UserController');
