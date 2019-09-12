@@ -34,7 +34,7 @@
                     <td>{{ $article->name }}</td>
                     <td>{{ number_readable($article->price, "$") }}</td>
                     <td>{{ $article->quantity }}</td>
-                    <td>{{ number_readable($article->discount, null, "%") }}</td>
+                    <td>{{ number_readable($article->discount, null, "%", true) }}</td>
                     <td>{{ number_readable($article->subtotal, "$") }}</td>
                 </tr>
             @endforeach
