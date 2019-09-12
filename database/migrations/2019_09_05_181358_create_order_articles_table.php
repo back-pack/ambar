@@ -20,6 +20,7 @@ class CreateOrderArticlesTable extends Migration
             $table->decimal('price', 8, 2);
             $table->integer('quantity');
             $table->decimal('discount', 8, 2);
+            $table->boolean('is_below_cost')->default(0);
             $table->timestamps();
         });
     }
