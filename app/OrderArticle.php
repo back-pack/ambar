@@ -6,7 +6,12 @@ use Illuminate\Database\Eloquent\Model;
 
 class OrderArticle extends Model
 {
-    protected $fillable = ['order_id', 'article_id', 'price', 'quantity', 'discount'];
+    protected $fillable = ['order_id', 'article_id', 'price', 'quantity', 'discount', 'is_below_cost'];
+
+    protected $casts = [
+        'price' => 'decimal:2',
+        'discount' => 'decimal:2'
+    ];
 
     public function order()
     {
