@@ -1,6 +1,10 @@
 <?php
 
 use Illuminate\Http\Request;
+use App\Article;
+use App\Client;
+use App\Http\Resources\Article as ArticleResource;
+use App\Http\Resources\Client as ClientResource;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,4 +19,24 @@ use Illuminate\Http\Request;
 
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
+});
+
+Route::get('articles', function (Request $request) {
+
+    if ($request->query('search')) {
+        $articles = Article::where('name', 'like', $request->query('search').'%')->get();
+    } else {
+        $articles = Article::all();
+    }
+
+    return ArticleResource::collection($articles);
+});
+
+Route::get('articles/{article}', function (Article $article) {
+    return new ArticleResource($article);
+});
+
+Route::get('clients', function (Request $request) {
+    $clients = Client::all();
+    return ClientResource::collection($clients);
 });
