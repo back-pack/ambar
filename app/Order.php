@@ -10,6 +10,11 @@ class Order extends Model
 
     protected $dates = ['delivery'];
 
+    protected $casts = [
+        'total' => 'decimal:2',
+        'weight' => 'decimal:2'
+    ];
+
     public function client()
     {
         return $this->belongsTo('App\Client');
