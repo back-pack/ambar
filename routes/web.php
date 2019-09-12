@@ -19,3 +19,7 @@ Route::resource('clients', 'ClientController');
 Route::resource('margins', 'MarginController');
 Route::resource('orders', 'OrderController');
 Route::resource('articles', 'ArticleController');
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');

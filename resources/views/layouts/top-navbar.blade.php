@@ -1,5 +1,5 @@
 <nav class="navbar navbar-expand-md navbar-dark bg-dark">
-    <div class="container">
+    <div class="container-fluid">
 
         <a href="/" class="navbar-brand">Ambar💕</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#top-navbar-menu">
@@ -23,7 +23,9 @@
                 </div>
                 </li>
             </ul>
-            <span class="navbar-text nav-link">Hola $USER</span>
+            <span class="navbar-text nav-link">
+                {{-- {{ Auth::user()->name }} --}} $user
+            </span>
             <button type="button" class="btn btn-outline-secondary" alt="salir"><i class="fas fa-sign-out-alt"></i></button>
         </div>
     </div>
