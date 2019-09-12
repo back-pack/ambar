@@ -10,6 +10,11 @@ class Article extends Model
 
     protected $dates = ['cost_last_update'];
 
+    protected $casts = [
+        'cost' => 'decimal:2',
+        'weight' => 'decimal:2'
+    ];
+
     /**
      * Accessors & Mutators
      */
