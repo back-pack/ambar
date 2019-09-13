@@ -18,7 +18,8 @@
         @input([
             'name' => 'profit',
             'label' => 'Ganancia',
-            'attributes' => ['type' => 'number', 'step' => 'any']
+            'input_group_append_text' => ['%'],
+            'attributes' => ['type' => 'number', 'step' => 'any', 'min' => 0]
         ])
 
         <button type="submit" class="btn btn-primary">Crear margen</button>
