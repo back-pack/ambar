@@ -37,4 +37,9 @@ class OrderArticle extends Model
     {
         return ($this->price * $this->quantity) - (($this->discount * ($this->price * $this->quantity)) / 100);
     }
+
+    public function getIsBelowCostAttribute()
+    {
+        return $this->subtotal < $this->article->cost * $this->quantity;
+    }
 }
