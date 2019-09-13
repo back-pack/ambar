@@ -30,7 +30,7 @@
         </tfoot>
         <tbody>
             @foreach ($order->articles as $article)
-                <tr>
+                <tr @if ($article->is_below_cost) class="table-warning" @endif>
                     <td>{{ $article->name }}</td>
                     <td>{{ number_readable($article->price, "$") }}</td>
                     <td>{{ $article->quantity }}</td>
