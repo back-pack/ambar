@@ -8,20 +8,18 @@
 
         <div class="collapse navbar-collapse" id="top-navbar-menu">
             <ul class="navbar-nav mr-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Pedidos</a>
-                </li>
-                <li class="nav-item active">
-                    <a class="nav-link" href="{{ route('articles.index') }}">Articulos</a>
-                </li>
+                @nav_item(['href' => route('orders.index'), 'url' => 'orders', 'text' => 'Pedidos'])
+                @nav_item(['href' => route('articles.index'), 'url' => 'articles', 'text' => 'Artículos'])
+
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Admin</a>
-                <div class="dropdown-menu" aria-labelledby="dropdown01">
-                <a class="dropdown-item" href="#">Markup</a>
-                <a class="dropdown-item" href="#">Clientes</a>
-                <a class="dropdown-item" href="#">Usuarios</a>
-                </div>
+                    <div class="dropdown-menu" aria-labelledby="dropdown01">
+                    @nav_dropdown_item(['href' => route('margins.index'), 'url' => 'margins', 'text' => 'Margenes'])
+                    @nav_dropdown_item(['href' => route('clients.index'), 'url' => 'clients', 'text' => 'Clientes'])
+                    <a class="dropdown-item" href="#">Usuarios</a>
+                    </div>
                 </li>
+
             </ul>
             <span class="navbar-text nav-link">
                 {{-- {{ Auth::user()->name }} --}} $user

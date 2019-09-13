@@ -30,5 +30,7 @@ class AppServiceProvider extends ServiceProvider
         Blade::include('components.form.bootstrap.checkbox-boolean', 'checkbox_boolean');
         Blade::include('components.form.bootstrap.textarea', 'textarea');
         Blade::include('components.form.bootstrap.field-errors', 'field_errors');
+        Blade::include('components.nav-item', 'nav_item');
+        Blade::include('components.nav-dropdown-item', 'nav_dropdown_item');
     }
 }
