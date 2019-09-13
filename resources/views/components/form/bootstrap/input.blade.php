@@ -43,7 +43,7 @@
           @endforeach
         </div>
       @endisset
+      @field_errors(['name' => $name])
     </div>
-    @field_errors(['name' => $name])
   </div>
 @endif
