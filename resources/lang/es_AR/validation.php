@@ -127,9 +127,7 @@ return [
     */
 
     'custom' => [
-        'gender' => [
-            'women_cannot_be_elders' => 'custom-message',
-        ],
+
     ],
 
     /*
@@ -144,7 +142,15 @@ return [
     */
 
     'attributes' => [
-
+        'name' => 'nombre',
+        'email' => 'correo eletrónico',
+        'description' => 'descripción',
+        'cost' => 'costo',
+        'weight' => 'peso',
+        'profit' => 'ganancia',
+        'articles' => 'artículos',
+        'articles.*.quantity' => 'cantidad',
+        'articles.*.discount' => 'descuento',
     ],
 
 ];
