@@ -37,8 +37,8 @@ class MarginController extends Controller
     public function store(Request $request)
     {
         Margin::create($request->validate([
-            'name' => ['required'],
-            'profit' => ['required']
+            'name' => ['required', 'max:30'],
+            'profit' => ['required', 'numeric', 'min:0']
         ]));
 
         return redirect(route('margins.index'));
@@ -63,7 +63,7 @@ class MarginController extends Controller
      */
     public function edit(Margin $margin)
     {
-        //
+        return view('model.margin.edit', compact('margin'));
     }
 
     /**
@@ -75,7 +75,12 @@ class MarginController extends Controller
      */
     public function update(Request $request, Margin $margin)
     {
-        //
+        $margin->update($request->validate([
+            'name' => ['required', 'max:30'],
+            'profit' => ['required', 'numeric', 'min:0']
+        ]));
+
+        return redirect(route('margins.index'));
     }
 
     /**
@@ -86,6 +91,7 @@ class MarginController extends Controller
      */
     public function destroy(Margin $margin)
     {
-        //
+        $margin->delete();
+        return redirect(route('margins.index'));
     }
 }
