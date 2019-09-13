@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Order;
+use App\OrderArticle;
 use App\Http\Resources\Order as OrderResource;
 use Illuminate\Http\Request;
 
@@ -15,7 +16,8 @@ class OrderController extends Controller
      */
     public function index()
     {
-        //
+        $orders = Order::all();
+        return view('model.order.index', compact('orders'));
     }
 
     /**
@@ -37,15 +39,15 @@ class OrderController extends Controller
     public function store(Request $request)
     {
         $attributes = $request->validate([
-            'client_id' => ['required', 'integer'],
+            'client_id' => ['required', 'integer', 'exists:clients,id'],
             'delivery' => ['nullable', 'date'],
             'articles' => ['required', 'array', 'filled'],
-            'articles.*.article.id' => ['required', 'integer'],
-            'articles.*.quantity' => ['required', 'numeric'],
-            'articles.*.discount' => ['required', 'numeric'],
+            'articles.*.article.id' => ['required', 'integer', 'exists:articles,id'],
+            'articles.*.quantity' => ['required', 'numeric', 'min:1'],
+            'articles.*.discount' => ['required', 'numeric', 'min:0'],
             'detail' => ['nullable', 'string'],
             'total' => ['required', 'numeric'],
-            'total_weight' => ['required', 'numeric']
+            'weight' => ['required', 'numeric']
         ]);
 
         $order = Order::create([
@@ -53,7 +55,7 @@ class OrderController extends Controller
             'delivery' => $attributes['delivery'],
             'detail' => $attributes['detail'],
             'total' => $attributes['total'],
-            'weight' => $attributes['total_weight'],
+            'weight' => $attributes['weight'],
         ]);
 
         foreach ($attributes['articles'] as $order_item) {
@@ -103,15 +105,15 @@ class OrderController extends Controller
     public function update(Request $request, Order $order)
     {
         $attributes = $request->validate([
-            'client_id' => ['required', 'integer'],
+            'client_id' => ['required', 'integer', 'exists:clients,id'],
             'delivery' => ['nullable', 'date'],
             'articles' => ['required', 'array', 'filled'],
-            'articles.*.article.id' => ['required', 'integer'],
-            'articles.*.quantity' => ['required', 'numeric'],
-            'articles.*.discount' => ['required', 'numeric'],
+            'articles.*.article.id' => ['required', 'integer', 'exists:articles,id'],
+            'articles.*.quantity' => ['required', 'numeric', 'min:1'],
+            'articles.*.discount' => ['required', 'numeric', 'min:0'],
             'detail' => ['nullable', 'string'],
             'total' => ['required', 'numeric'],
-            'total_weight' => ['required', 'numeric']
+            'weight' => ['required', 'numeric']
         ]);
 
         $order->update([
@@ -119,7 +121,7 @@ class OrderController extends Controller
             'delivery' => $attributes['delivery'],
             'detail' => $attributes['detail'],
             'total' => $attributes['total'],
-            'weight' => $attributes['total_weight'],
+            'weight' => $attributes['weight'],
         ]);
 
         // Get the items from the form
@@ -128,27 +130,16 @@ class OrderController extends Controller
         });
 
         // Get the IDs of the items from the form
-        $itemIds = [];
-
-        foreach ($items as $item) {
-            $itemIds[] = $item['id'];
-        }
+        $itemIds = \Arr::pluck($items, 'id');
 
         // Get the IDs of the items that are already in the order
-        $articleIds = [];
-
-        foreach ($order->articles->toArray() as $item) {
-            $articleIds[] = $item['id'];
-        }
+        $articleIds = \Arr::pluck($order->articles->toArray(), 'id');
 
         // Get the items that where deleted from the form
         $toDelete = array_diff($articleIds, $itemIds);
 
         // Delete the items
-        foreach ($toDelete as $id) {
-            $order_article = \App\OrderArticle::find($id);
-            $order_article->delete();
-        }
+        OrderArticle::destroy($toDelete);
 
         // Update the items
         foreach ($items as $item) {
@@ -190,6 +181,8 @@ class OrderController extends Controller
      */
     public function destroy(Order $order)
     {
-        //
+        $order->articles()->delete();
+        $order->delete();
+        return redirect(route('orders.index'));
     }
 }
