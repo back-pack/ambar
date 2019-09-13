@@ -40,9 +40,9 @@ class ClientController extends Controller
     public function store(Request $request)
     {
         Client::create($request->validate([
-            'name' => ['required'],
-            'email' => ['required'],
-            'margin_id' => ['required']
+            'name' => ['required', 'max:30'],
+            'email' => ['required', 'email'],
+            'margin_id' => ['required', 'numeric', 'exists:margins,id']
         ]));
 
         return redirect(route('clients.index'));
@@ -67,7 +67,10 @@ class ClientController extends Controller
      */
     public function edit(Client $client)
     {
-        //
+        $margins = \App\Margin::all()->transform(function ($item) {
+            return [$item->id, $item->name];
+        });
+        return view('model.client.edit', compact('client', 'margins'));
     }
 
     /**
@@ -79,7 +82,13 @@ class ClientController extends Controller
      */
     public function update(Request $request, Client $client)
     {
-        //
+        $client->update($request->validate([
+            'name' => ['required', 'max:30'],
+            'email' => ['required', 'email'],
+            'margin_id' => ['required', 'numeric', 'exists:margins,id']
+        ]));
+
+        return redirect(route('clients.index'));
     }
 
     /**
@@ -90,6 +99,7 @@ class ClientController extends Controller
      */
     public function destroy(Client $client)
     {
-        //
+        $client->delete();
+        return redirect(route('clients.index'));
     }
 }
