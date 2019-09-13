@@ -2020,7 +2020,7 @@ __webpack_require__.r(__webpack_exports__);
         articles: [],
         detail: "",
         total: 0.00,
-        total_weight: 0.00
+        weight: 0.00
       }),
       margin_profit: 0,
       system_error: null
@@ -2068,8 +2068,8 @@ __webpack_require__.r(__webpack_exports__);
     updateTotal: function updateTotal(value) {
       this.form.total = value;
     },
-    updateTotalWeight: function updateTotalWeight(value) {
-      this.form.total_weight = value;
+    updateWeight: function updateWeight(value) {
+      this.form.weight = value;
     },
     clearSystemError: function clearSystemError() {
       this.system_error = null;
@@ -2200,7 +2200,7 @@ __webpack_require__.r(__webpack_exports__);
         articles: [],
         detail: "",
         total: 0.00,
-        total_weight: 0.00
+        weight: 0.00
       }),
       margin_profit: 0,
       system_error: null
@@ -2255,8 +2255,8 @@ __webpack_require__.r(__webpack_exports__);
     updateTotal: function updateTotal(value) {
       this.form.total = value;
     },
-    updateTotalWeight: function updateTotalWeight(value) {
-      this.form.total_weight = value;
+    updateWeight: function updateWeight(value) {
+      this.form.weight = value;
     },
     clearSystemError: function clearSystemError() {
       this.system_error = null;
@@ -2502,7 +2502,7 @@ __webpack_require__.r(__webpack_exports__);
     total_formatted: function total_formatted() {
       return numeral__WEBPACK_IMPORTED_MODULE_0___default()(this.total).format('$0,0.00');
     },
-    total_weight: function total_weight() {
+    weight: function weight() {
       return this.items.reduce(function (a, b) {
         return a + (b['article']['weight'] || 0) * (b['quantity'] || 0);
       }, 0);
@@ -2518,8 +2518,8 @@ __webpack_require__.r(__webpack_exports__);
     total: function total(value) {
       this.$emit('update-total', value);
     },
-    total_weight: function total_weight(value) {
-      this.$emit('update-total-weight', value);
+    weight: function weight(value) {
+      this.$emit('update-weight', value);
     }
   },
   methods: {
@@ -39050,7 +39050,7 @@ var render = function() {
           "update-item": _vm.updateItem,
           "remove-item": _vm.removeItem,
           "update-total": _vm.updateTotal,
-          "update-total-weight": _vm.updateTotalWeight
+          "update-weight": _vm.updateWeight
         }
       }),
       _vm._v(" "),
@@ -39281,7 +39281,7 @@ var render = function() {
           "update-item": _vm.updateItem,
           "remove-item": _vm.removeItem,
           "update-total": _vm.updateTotal,
-          "update-total-weight": _vm.updateTotalWeight
+          "update-weight": _vm.updateWeight
         }
       }),
       _vm._v(" "),
@@ -39604,13 +39604,13 @@ var render = function() {
             {
               name: "show",
               rawName: "v-show",
-              value: _vm.total_weight > 0,
-              expression: "total_weight > 0"
+              value: _vm.weight > 0,
+              expression: "weight > 0"
             }
           ],
           staticClass: "col"
         },
-        [_c("b", [_vm._v("Peso total: " + _vm._s(_vm.total_weight) + "kg")])]
+        [_c("b", [_vm._v("Peso total: " + _vm._s(_vm.weight) + "kg")])]
       ),
       _vm._v(" "),
       _c(
