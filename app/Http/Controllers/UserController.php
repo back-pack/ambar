@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -20,7 +21,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::where('is_active', '=', '1')->get()->except(Auth::id());
+        $users = User::all()->except(Auth::id());
         return view('model.user.index', compact('users'));
     }
 
@@ -48,14 +49,16 @@ class UserController extends Controller
             'phone' => ['string', 'min:8'],
             'password' => ['required', 'string', 'min:8', 'required_with:password_confirm', 'same:password_confirm'],
             'password_confirm' => ['required', 'string', 'min:8'],
-            'is_admin' => ['required', 'boolean']
         ]);
+        
+        array_key_exists('is_admin', $request->all()) ? $attributes['is_admin'] = true : $attributes['is_admin'] = false;
+        array_key_exists('is_active', $request->all()) ? $attributes['is_active'] = true : $attributes['is_active'] = false;
 
-        $attributes['is_active'] = true;
-
+        $attributes['password'] = Hash::make($attributes['password']);
+        
         User::create($attributes);
 
-        return redirect(route('users.index'));
+        return redirect(route('users.index'))->with('success','El usuario se creó correctamente.');    
     }
 
     /**
@@ -94,25 +97,31 @@ class UserController extends Controller
             'phone' => ['string', 'min:8'],
             'password' => ['required', 'string', 'min:8', 'required_with:password_confirm', 'same:password_confirm'],
             'password_confirm' => ['required', 'string', 'min:8'],
-            'is_admin' => ['required', 'boolean'],
-            'is_active' => ['required', 'boolean']
         ]);
-
-        $attributes['is_active'] = true;
+        
+        array_key_exists('is_admin', $request->all()) ? $attributes['is_admin'] = true : $attributes['is_admin'] = false;
+        array_key_exists('is_active', $request->all()) ? $attributes['is_active'] = true : $attributes['is_active'] = false;
+        
+        if($attributes['password'] === '********') {
+            $attributes['password'] = $user->password;
+        } else {
+            $attributes['password'] = Hash::make($attributes['password']);
+        }
 
         $user->update($attributes);
 
-        return redirect(route('users.index'));
+        return redirect(route('users.index'))->with('success', 'Los datos se actualizaron correctamente.');    
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param \App\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(User $user)
     {
-        //
+        $user->delete();
+        return redirect(route('users.index'))->with('success','El registro fue eliminado correctamente.');    
     }
 }
