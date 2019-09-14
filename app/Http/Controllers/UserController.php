@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\User;
 use Illuminate\Http\Request;
-use Auth;
+use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
@@ -20,8 +20,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        //TODO: Traer usuarios excepto el usuario de sesión.
-        $users = User::where('is_active', '=', '1')->get();
+        $users = User::where('is_active', '=', '1')->get()->except(Auth::id());
         return view('model.user.index', compact('users'));
     }
 
