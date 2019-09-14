@@ -5,7 +5,8 @@
 @endsection
 
 @section('content')
-
+    <br />
+    @include('flash-message')
     <div class="col-sm">
       <p class='h2'>Usuarios | <a href="{{ route('users.create') }}" ><button class="btn btn-sm btn-outline-success" type="button"><i class="fas fa-plus-square"></i></button></a> <button onclick="alert('Imprime lista')" class="btn btn-sm btn-outline-secondary" type="button"><i class="fas fa-print"></i></button> <button onclick="hide()" class="btn btn-sm btn-outline-primary" type="button"><i class="fas fa-tools"></i></button></p>
       <table class="table table-hover table-responsive-sm">
