@@ -22,9 +22,9 @@
 
             </ul>
             <span class="navbar-text nav-link">
-                {{-- {{ Auth::user()->name }} --}} $user
+                {{ Auth::user()->name }}
             </span>
-            <button type="button" class="btn btn-outline-secondary" alt="salir"><i class="fas fa-sign-out-alt"></i></button>
+            <a type="button" href="{{ Auth::logout() }}"class="btn btn-outline-secondary" alt="salir"><i class="fas fa-sign-out-alt"></i></a>
         </div>
     </div>
 </nav>
