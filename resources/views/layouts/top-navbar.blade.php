@@ -24,7 +24,7 @@
             <span class="navbar-text nav-link">
                 {{ Auth::user()->name }}
             </span>
-            <a type="button" href="{{ Auth::logout() }}"class="btn btn-outline-secondary" alt="salir"><i class="fas fa-sign-out-alt"></i></a>
+            <a type="button" href="{{ url('/logout') }}" class="btn btn-outline-secondary" alt="salir"><i class="fas fa-sign-out-alt"></i></a>
         </div>
     </div>
 </nav>
