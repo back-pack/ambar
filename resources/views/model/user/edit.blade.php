@@ -13,25 +13,50 @@
       @input([
         'name' => 'name',
         'label' => 'Nombre',
-        'attributes' => ['type' => 'text']
+        'attributes' => ['type' => 'text'],
+        'value' => $user->name
       ])
 
       @input([
         'name' => 'email',
-        'label' => 'Email',
-        'attributes' => ['type' => 'email']
+        'label' => 'Correo electrónico',
+        'attributes' => ['type' => 'email', 'readonly' => 'true'],
+        'value' => $user->email
       ])
 
       @input([
         'name' => 'phone',
         'label' => 'Teléfono',
-        'attributes' => ['type' => 'text']
+        'attributes' => ['type' => 'text'],
+        'value' => $user->phone
+      ])
+
+      @input([
+        'name' => 'is_admin',
+        'label' => '¿Es admin?',
+        'attributes' => ['type' => 'checkbox'],
+        'value' => $user->is_admin
+      ])
+
+      @input([
+        'name' => 'is_active',
+        'label' => '¿Activo?',
+        'attributes' => ['type' => 'checkbox'],
+        'value' => $user->is_active
       ])
       
       @input([
         'name' => 'password',
         'label' => 'Contraseña',
-        'attributes' => ['type' => 'password']
+        'attributes' => ['type' => 'password'],
+        'value' => $user->password
+      ])
+
+      @input([
+        'name' => 'password_confirm',
+        'label' => 'Confirmar contraseña',
+        'attributes' => ['type' => 'password'],
+        'value' => $user->password
       ])
 
       <button type="submit" class="btn btn-primary">Editar</button>

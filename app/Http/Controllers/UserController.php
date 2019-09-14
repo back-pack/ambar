@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\User;
 use Illuminate\Http\Request;
+use Auth;
 
 class UserController extends Controller
 {
@@ -19,7 +20,8 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::all();
+        //TODO: Traer usuarios excepto el usuario de sesión.
+        $users = User::where('is_active', '=', '1')->get();
         return view('model.user.index', compact('users'));
     }
 
@@ -44,15 +46,17 @@ class UserController extends Controller
         $attributes = $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
-            'phone' => ['required', 'string', 'min:8']
+            'phone' => ['string', 'min:8'],
+            'password' => ['required', 'string', 'min:8', 'required_with:password_confirm', 'same:password_confirm'],
+            'password_confirm' => ['required', 'string', 'min:8'],
+            'is_admin' => ['required', 'boolean']
         ]);
 
         $attributes['is_active'] = true;
 
         User::create($attributes);
 
-        return redirect(route('articles.index'));
+        return redirect(route('users.index'));
     }
 
     /**
@@ -86,7 +90,20 @@ class UserController extends Controller
      */
     public function update(Request $request, User $user)
     {
-        //
+        $attributes = $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'phone' => ['string', 'min:8'],
+            'password' => ['required', 'string', 'min:8', 'required_with:password_confirm', 'same:password_confirm'],
+            'password_confirm' => ['required', 'string', 'min:8'],
+            'is_admin' => ['required', 'boolean'],
+            'is_active' => ['required', 'boolean']
+        ]);
+
+        $attributes['is_active'] = true;
+
+        $user->update($attributes);
+
+        return redirect(route('users.index'));
     }
 
     /**

@@ -17,8 +17,8 @@
 
       @input([
         'name' => 'email',
-        'label' => 'Email',
-        'attributes' => ['type' => 'email', 'step' => 'any']
+        'label' => 'Correo electrónico',
+        'attributes' => ['type' => 'email']
       ])
 
       @input([
@@ -26,11 +26,31 @@
         'label' => 'Teléfono',
         'attributes' => ['type' => 'text']
       ])
+
+      @input([
+        'name' => 'is_admin',
+        'label' => '¿Es admin?',
+        'value' => '0',
+        'attributes' => ['type' => 'checkbox']
+      ])
+
+      @input([
+        'name' => 'is_active',
+        'label' => '¿Activo?',
+        'value' => '1',
+        'attributes' => ['type' => 'checkbox']
+      ])
       
       @input([
         'name' => 'password',
         'label' => 'Contraseña',
-        'attributes' => ['type' => 'text']
+        'attributes' => ['type' => 'password']
+      ])
+
+      @input([
+        'name' => 'password_confirm',
+        'label' => 'Confirmar contraseña',
+        'attributes' => ['type' => 'password']
       ])
 
       <button type="submit" class="btn btn-primary">Crear</button>
