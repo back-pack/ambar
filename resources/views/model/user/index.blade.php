@@ -16,6 +16,8 @@
             <th scope="col">Nombre</th>
             <th scope="col">E-mail</th>
             <th scope="col">Teléfono</th>
+            <th scope="col">¿Es administrador?</th>
+            <th scope="col">¿Está activo?</th>
             <th class="config" scope="col"><i class="fas fa-tools config"></i></th>
           </tr>
         </thead>
@@ -26,6 +28,8 @@
               <td>{{ $user->name }}</td>
               <td>{{ $user->email }}</td>
               <td>{{ $user->phone }}</td>
+              <td>{{ $user->is_admin ? 'Si' : 'No' }}</td>
+              <td>{{ $user->is_active ? 'Si' : 'No' }}</td>
               <td class='config'><a href="{{ route('users.edit', ['id' => $user->id]) }}"><button type="button" class="btn btn-sm btn-outline-warning config"><i class="fas fa-wrench"></i></button></a></td>
             </tr>
           @endforeach
