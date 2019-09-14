@@ -30,7 +30,7 @@
       @input([
         'name' => 'is_admin',
         'label' => '¿Es admin?',
-        'value' => '0',
+        'value' => '1',
         'attributes' => ['type' => 'checkbox']
       ])
 
@@ -38,7 +38,7 @@
         'name' => 'is_active',
         'label' => '¿Activo?',
         'value' => '1',
-        'attributes' => ['type' => 'checkbox']
+        'attributes' => ['type' => 'checkbox', 'checked' => 'checked']
       ])
       
       @input([
