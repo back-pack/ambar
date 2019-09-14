@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
+
+use App\Repositories\UserRepository;
+use App\Http\Requests\StoreUserRequest;
 
 class UserController extends Controller
 {
@@ -38,26 +40,13 @@ class UserController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  StoreUserRequest  $request
+     * @return UserRepository $userRepo
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreUserRequest $request, UserRepository $userRepo)
     {
-        $attributes = $request->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'phone' => ['string', 'min:8'],
-            'password' => ['required', 'string', 'min:8', 'required_with:password_confirm', 'same:password_confirm'],
-            'password_confirm' => ['required', 'string', 'min:8'],
-        ]);
-        
-        array_key_exists('is_admin', $request->all()) ? $attributes['is_admin'] = true : $attributes['is_admin'] = false;
-        array_key_exists('is_active', $request->all()) ? $attributes['is_active'] = true : $attributes['is_active'] = false;
-
-        $attributes['password'] = Hash::make($attributes['password']);
-        
-        User::create($attributes);
-
+        $userRepo->create($request);
         return redirect(route('users.index'))->with('success','El usuario se creó correctamente.');    
     }
 
@@ -83,45 +72,30 @@ class UserController extends Controller
         return view('model.user.edit', compact('user'));
     }
 
-    /**
-     * Update the specified resource in storage.
+     /**
+     * Update a resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\User $user
+     * @param  StoreUserRequest  $request
+     * @param UserRepository $userRepo
+     * @param $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, User $user)
+    public function update(StoreUserRequest $request, UserRepository $userRepo, $id)
     {
-        $attributes = $request->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'phone' => ['string', 'min:8'],
-            'password' => ['required', 'string', 'min:8', 'required_with:password_confirm', 'same:password_confirm'],
-            'password_confirm' => ['required', 'string', 'min:8'],
-        ]);
-        
-        array_key_exists('is_admin', $request->all()) ? $attributes['is_admin'] = true : $attributes['is_admin'] = false;
-        array_key_exists('is_active', $request->all()) ? $attributes['is_active'] = true : $attributes['is_active'] = false;
-        
-        if($attributes['password'] === '********') {
-            $attributes['password'] = $user->password;
-        } else {
-            $attributes['password'] = Hash::make($attributes['password']);
-        }
-
-        $user->update($attributes);
-
+        $userRepo->update($request, $id);
         return redirect(route('users.index'))->with('success', 'Los datos se actualizaron correctamente.');    
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param \App\User  $user
+     * @param UserRepository $userRepo
+     * @param $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(User $user)
+    public function destroy(UserRepository $userRepo, $id)
     {
-        $user->delete();
+        $userRepo->delete($id);
         return redirect(route('users.index'))->with('success','El registro fue eliminado correctamente.');    
     }
 }
