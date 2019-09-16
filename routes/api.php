@@ -30,7 +30,7 @@ Route::get('orders/{order}', function (Order $order) {
 Route::get('articles', function (Request $request) {
 
     if ($request->query('search')) {
-        $articles = Article::where('name', 'like', $request->query('search').'%')->get();
+        $articles = Article::where('name', 'like', $request->query('search').'%')->take(5)->get();
     } else {
         $articles = Article::all();
     }
