@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Order;
 use App\OrderArticle;
+use App\Http\Requests\OrderRequest;
 use App\Http\Resources\Order as OrderResource;
 use Illuminate\Http\Request;
 
@@ -36,27 +37,11 @@ class OrderController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(OrderRequest $request)
     {
-        $attributes = $request->validate([
-            'client_id' => ['required', 'integer', 'exists:clients,id'],
-            'delivery' => ['nullable', 'date'],
-            'articles' => ['required', 'array', 'filled'],
-            'articles.*.article.id' => ['required', 'integer', 'exists:articles,id'],
-            'articles.*.quantity' => ['required', 'numeric', 'min:1'],
-            'articles.*.discount' => ['required', 'numeric', 'min:0'],
-            'detail' => ['nullable', 'string'],
-            'total' => ['required', 'numeric'],
-            'weight' => ['required', 'numeric']
-        ]);
+        $attributes = $request->validated();
 
-        $order = Order::create([
-            'client_id' => $attributes['client_id'],
-            'delivery' => $attributes['delivery'],
-            'detail' => $attributes['detail'],
-            'total' => $attributes['total'],
-            'weight' => $attributes['weight'],
-        ]);
+        $order = Order::create(\Arr::only($attributes, ['client_id', 'delivery', 'detail', 'total', 'weight']));
 
         foreach ($attributes['articles'] as $order_item) {
             $article = new \App\OrderArticle([
@@ -102,27 +87,11 @@ class OrderController extends Controller
      * @param  \App\Order  $order
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Order $order)
+    public function update(OrderRequest $request, Order $order)
     {
-        $attributes = $request->validate([
-            'client_id' => ['required', 'integer', 'exists:clients,id'],
-            'delivery' => ['nullable', 'date'],
-            'articles' => ['required', 'array', 'filled'],
-            'articles.*.article.id' => ['required', 'integer', 'exists:articles,id'],
-            'articles.*.quantity' => ['required', 'numeric', 'min:1'],
-            'articles.*.discount' => ['required', 'numeric', 'min:0'],
-            'detail' => ['nullable', 'string'],
-            'total' => ['required', 'numeric'],
-            'weight' => ['required', 'numeric']
-        ]);
+        $attributes = $request->validated();
 
-        $order->update([
-            'client_id' => $attributes['client_id'],
-            'delivery' => $attributes['delivery'],
-            'detail' => $attributes['detail'],
-            'total' => $attributes['total'],
-            'weight' => $attributes['weight'],
-        ]);
+        $order->update(\Arr::only($attributes, ['client_id', 'delivery', 'detail', 'total', 'weight']));
 
         // Get the items from the form
         $items = array_filter($attributes['articles'], function ($item) {
