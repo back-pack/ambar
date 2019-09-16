@@ -14,7 +14,7 @@ class ClientController extends Controller
      */
     public function index()
     {
-        $clients = Client::all();
+        $clients = Client::paginate(config('pagination.model.client'));
         return view('model.client.index', compact('clients'));
     }
 

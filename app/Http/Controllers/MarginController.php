@@ -14,7 +14,7 @@ class MarginController extends Controller
      */
     public function index()
     {
-        $margins = Margin::all();
+        $margins = Margin::paginate(config('pagination.model.margin'));
         return view('model.margin.index', compact('margins'));
     }
 
