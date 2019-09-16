@@ -13,6 +13,10 @@ class OrderArticle extends Model
         'discount' => 'decimal:2'
     ];
 
+    /**
+     * Relationships
+     */
+
     public function order()
     {
         return $this->belongsTo('App\Order');
@@ -22,6 +26,10 @@ class OrderArticle extends Model
     {
         return $this->belongsTo('App\Article');
     }
+
+    /**
+     * Accessors & Mutators
+     */
 
     public function getNameAttribute()
     {

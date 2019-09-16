@@ -8,6 +8,10 @@ class Margin extends Model
 {
     protected $fillable = ['name', 'profit'];
 
+    /**
+     * Relationships
+     */
+
     public function clients()
     {
         return $this->hasMany('App\Client');
