@@ -13,12 +13,17 @@ class StoreUserRequest extends FormRequest
 
     public function rules(): array
     {
-        return [
+        $rules = [
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email,'.$this->user],
             'phone' => ['string', 'min:8'],
-            'password' => ['required', 'string', 'min:8', 'required_with:password_confirm', 'same:password_confirm'],
-            'password_confirm' => ['required', 'string', 'min:8'],
         ];
+        if($this->method() == "POST") {
+            $rules = [
+                'password' => ['required', 'string', 'min:8', 'regex:/^.*(?=.{3,})(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[\d\X])(?=.*[!$#%.]).*$/'],
+                'password_confirm' => ['required', 'string', 'min:8', 'required_with:password', 'same:password',]
+            ];
+        }
+        return $rules;
     }
 }

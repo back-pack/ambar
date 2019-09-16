@@ -65,14 +65,14 @@
       @input([
         'name' => 'password',
         'label' => 'Contraseña',
-        'attributes' => ['type' => 'password'],
+        'attributes' => ['type' => 'password', 'readonly' => 'true'],
         'value' => '********'
       ])
 
       @input([
         'name' => 'password_confirm',
         'label' => 'Confirmar contraseña',
-        'attributes' => ['type' => 'password'],
+        'attributes' => ['type' => 'password', 'readonly' => 'true'],
         'value' => '********'
       ])
 
