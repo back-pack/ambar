@@ -1871,6 +1871,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     errors: Object
@@ -1878,7 +1881,8 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       term: "",
-      data: []
+      data: [],
+      loading: false
     };
   },
   methods: {
@@ -1886,6 +1890,7 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       if (this.term !== '') {
+        this.loading = true;
         axios.get('/api/articles', {
           params: {
             search: this.term
@@ -1893,6 +1898,8 @@ __webpack_require__.r(__webpack_exports__);
         }).then(function (_ref) {
           var data = _ref.data;
           return _this.data = data.data;
+        })["finally"](function () {
+          return _this.loading = false;
         });
       } else {
         this.data = [];
@@ -1926,23 +1933,30 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     value: Number
   },
   data: function data() {
     return {
-      clients: []
+      clients: [],
+      loading: false
     };
   },
   created: function created() {
     var _this = this;
 
+    this.loading = true;
     axios.get('/api/clients').then(function (_ref) {
       var data = _ref.data;
       _this.clients = data.data;
 
       _this.updateMargin(_this.clients[0].margin_profit);
+    })["finally"](function () {
+      return _this.loading = false;
     });
   },
   methods: {
@@ -38879,6 +38893,23 @@ var render = function() {
   return _c("div", { staticClass: "form-group" }, [
     _c("label", { attrs: { for: "" } }, [_vm._v("Buscar artículo")]),
     _vm._v(" "),
+    _c(
+      "div",
+      {
+        directives: [
+          {
+            name: "show",
+            rawName: "v-show",
+            value: _vm.loading,
+            expression: "loading"
+          }
+        ],
+        staticClass: "spinner-border spinner-border-sm text-primary",
+        attrs: { role: "status" }
+      },
+      [_c("span", { staticClass: "sr-only" }, [_vm._v("Cargando...")])]
+    ),
+    _vm._v(" "),
     _c("input", {
       directives: [
         {
@@ -38960,6 +38991,23 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "form-group" }, [
     _c("label", { attrs: { for: "client_id" } }, [_vm._v("Cliente")]),
+    _vm._v(" "),
+    _c(
+      "div",
+      {
+        directives: [
+          {
+            name: "show",
+            rawName: "v-show",
+            value: _vm.loading,
+            expression: "loading"
+          }
+        ],
+        staticClass: "spinner-border spinner-border-sm text-primary",
+        attrs: { role: "status" }
+      },
+      [_c("span", { staticClass: "sr-only" }, [_vm._v("Cargando...")])]
+    ),
     _vm._v(" "),
     _c(
       "select",
@@ -51914,8 +51962,6 @@ files.keys().map(function (key) {
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-__webpack_require__(/*! ./testing */ "./resources/js/testing.js");
-
 window.Event = new Vue();
 var app = new Vue({
   el: '#app'
@@ -52783,17 +52829,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_SystemError_vue_vue_type_template_id_101d8904_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_SystemError_vue_vue_type_template_id_101d8904_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
-
-
-
-/***/ }),
-
-/***/ "./resources/js/testing.js":
-/*!*********************************!*\
-  !*** ./resources/js/testing.js ***!
-  \*********************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
 
 
 
