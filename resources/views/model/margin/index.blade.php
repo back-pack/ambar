@@ -25,5 +25,7 @@
           @endforeach
         </tbody>
       </table>
+
+      {{ $margins->links() }}
     </div>
 @endsection
