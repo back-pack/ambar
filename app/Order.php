@@ -15,6 +15,10 @@ class Order extends Model
         'weight' => 'decimal:2'
     ];
 
+    /**
+     * Relationships
+     */
+
     public function client()
     {
         return $this->belongsTo('App\Client');
@@ -24,6 +28,29 @@ class Order extends Model
     {
         return $this->hasMany('App\OrderArticle');
     }
+
+    /**
+     * Scopes
+     */
+
+     public function scopeWithDeliveryNull($query)
+     {
+         return $query->whereNull('delivery');
+     }
+
+     public function scopeDelivery($query, $date)
+     {
+         return $query->whereDate('delivery', $date);
+     }
+
+     public function scopeCreatedAt($query, $date)
+     {
+         return $query->whereDate('created_at', $date);
+     }
+
+    /**
+     * Accessors & Mutators
+     */
 
     public function getDeliveryFormattedAttribute()
     {
