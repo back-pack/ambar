@@ -15,9 +15,27 @@ class OrderController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $orders = Order::all();
+        $orders = Order::whereNotNull('created_at');
+
+        if ($request->query('created_at')) {
+            $date = \Carbon\Carbon::create($request->query('created_at'));
+            $orders = $orders->createdAt($date);
+        }
+
+        if ($request->query('delivery')) {
+            if ($request->query('delivery') == 1) {
+                $orders = $orders->withDeliveryNull();
+            }
+            else {
+                $date = \Carbon\Carbon::create($request->query('delivery'));
+                $orders = $orders->delivery($date);
+            }
+        }
+
+        $orders = $orders->paginate(config('pagination.model.order'));
+
         return view('model.order.index', compact('orders'));
     }
 
