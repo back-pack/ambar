@@ -1,5 +1,8 @@
 @extends('layouts.master')
 
+@section('title')
+    <title>Editar pedido</title>
+@endsection
 
 @section('content')
 
