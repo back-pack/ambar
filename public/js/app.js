@@ -2234,6 +2234,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
@@ -2241,6 +2242,9 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
+      user: {
+        is_admin: false
+      },
       form: new _classes_Form__WEBPACK_IMPORTED_MODULE_0__["default"]({
         client_id: 1,
         delivery: null,
@@ -2258,7 +2262,32 @@ __webpack_require__.r(__webpack_exports__);
 
     axios.get('/api/orders/' + this.order_id).then(function (response) {
       return _this.form = new _classes_Form__WEBPACK_IMPORTED_MODULE_0__["default"](response.data.data);
+    })["catch"](function (data) {
+      if (!data.errors) {
+        _this.system_error = data;
+      }
     });
+    axios.get('/api/user').then(function (_ref) {
+      var data = _ref.data;
+      return _this.user = data.data;
+    })["catch"](function (data) {
+      if (!data.errors) {
+        _this.system_error = data;
+      }
+    });
+  },
+  computed: {
+    disable_submit: function disable_submit() {
+      if (this.user.is_admin) {
+        return false;
+      }
+
+      if (!this.items_below_cost) {
+        return false;
+      }
+
+      return true;
+    }
   },
   methods: {
     submitForm: function submitForm() {
@@ -2287,10 +2316,10 @@ __webpack_require__.r(__webpack_exports__);
         is_below_cost: is_below_cost
       });
     },
-    updateItem: function updateItem(_ref) {
-      var index = _ref.index,
-          field = _ref.field,
-          value = _ref.value;
+    updateItem: function updateItem(_ref2) {
+      var index = _ref2.index,
+          field = _ref2.field,
+          value = _ref2.value;
       this.form.articles[index][field] = value;
     },
     removeItem: function removeItem(index) {
@@ -2301,6 +2330,9 @@ __webpack_require__.r(__webpack_exports__);
     },
     updateTotal: function updateTotal(value) {
       this.form.total = value;
+    },
+    updateItemsBelowCost: function updateItemsBelowCost(value) {
+      this.items_below_cost = value;
     },
     updateWeight: function updateWeight(value) {
       this.form.weight = value;
@@ -39366,7 +39398,8 @@ var render = function() {
           "update-item": _vm.updateItem,
           "remove-item": _vm.removeItem,
           "update-total": _vm.updateTotal,
-          "update-weight": _vm.updateWeight
+          "update-weight": _vm.updateWeight,
+          "update-items-below-cost": _vm.updateItemsBelowCost
         }
       }),
       _vm._v(" "),
@@ -39405,7 +39438,7 @@ var render = function() {
         "button",
         {
           staticClass: "btn btn-primary",
-          attrs: { type: "button" },
+          attrs: { type: "button", disabled: _vm.disable_submit },
           on: {
             click: function($event) {
               $event.preventDefault()
