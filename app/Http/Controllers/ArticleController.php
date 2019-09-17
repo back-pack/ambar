@@ -3,10 +3,19 @@
 namespace App\Http\Controllers;
 
 use App\Article;
+use App\Http\Requests\ArticleRequest;
+use App\Repositories\ArticleRepository;
 use Illuminate\Http\Request;
 
 class ArticleController extends Controller
 {
+    private $repository;
+
+    public function __construct(ArticleRepository $repository)
+    {
+        $this->repository = $repository;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +23,7 @@ class ArticleController extends Controller
      */
     public function index()
     {
-        $articles = Article::paginate(config('pagination.model.article'));
+        $articles = $this->repository->all();
         return view('model.article.index', compact('articles'));
     }
 
@@ -34,18 +43,9 @@ class ArticleController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ArticleRequest $request)
     {
-        $attributes = $request->validate([
-            'name' => ['required'],
-            'description' => ['required'],
-            'cost' => ['required'],
-            'weight' => ['required']
-        ]);
-
-        $attributes['cost_last_update'] = now();
-
-        Article::create($attributes);
+        $this->repository->create($request);
 
         return redirect(route('articles.index'));
     }
@@ -79,20 +79,9 @@ class ArticleController extends Controller
      * @param  \App\Article  $article
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Article $article)
+    public function update(ArticleRequest $request, Article $article)
     {
-        $attributes = $request->validate([
-            'name' => ['required'],
-            'cost' => ['required'],
-            'description' => ['required'],
-            'weight' => ['required']
-        ]);
-
-        if ($request->input('cost') !== $article->cost) {
-            $attributes['cost_last_update'] = now();
-        }
-
-        $article->update($attributes);
+        $article = $this->repository->update($request, $article);
 
         return redirect(route('articles.index'));
     }
@@ -105,7 +94,7 @@ class ArticleController extends Controller
      */
     public function destroy(Article $article)
     {
-        $article->delete();
+        $this->repository->delete($article);
 
         return redirect(route('articles.index'));
     }
