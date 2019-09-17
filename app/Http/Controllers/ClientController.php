@@ -3,10 +3,19 @@
 namespace App\Http\Controllers;
 
 use App\Client;
+use App\Repositories\ClientRepository;
+use App\Http\Requests\ClientRequest;
 use Illuminate\Http\Request;
 
 class ClientController extends Controller
 {
+    private $repository;
+
+    public function __construct(ClientRepository $repository)
+    {
+        $this->repository = $repository;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +23,7 @@ class ClientController extends Controller
      */
     public function index()
     {
-        $clients = Client::paginate(config('pagination.model.client'));
+        $clients = $this->repository->all();
         return view('model.client.index', compact('clients'));
     }
 
@@ -25,9 +34,7 @@ class ClientController extends Controller
      */
     public function create()
     {
-        $margins = \App\Margin::all()->transform(function ($item) {
-            return [$item->id, $item->name];
-        });
+        $margins = \App\Margin::all()->map->asSelectOption();
         return view('model.client.create', compact('margins'));
     }
 
@@ -37,13 +44,9 @@ class ClientController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ClientRequest $request)
     {
-        Client::create($request->validate([
-            'name' => ['required', 'max:30'],
-            'email' => ['required', 'email'],
-            'margin_id' => ['required', 'numeric', 'exists:margins,id']
-        ]));
+        $this->repository->create($request);
 
         return redirect(route('clients.index'));
     }
@@ -67,9 +70,7 @@ class ClientController extends Controller
      */
     public function edit(Client $client)
     {
-        $margins = \App\Margin::all()->transform(function ($item) {
-            return [$item->id, $item->name];
-        });
+        $margins = \App\Margin::all()->map->asSelectOption();
         return view('model.client.edit', compact('client', 'margins'));
     }
 
@@ -80,13 +81,9 @@ class ClientController extends Controller
      * @param  \App\Client  $client
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Client $client)
+    public function update(ClientRequest $request, Client $client)
     {
-        $client->update($request->validate([
-            'name' => ['required', 'max:30'],
-            'email' => ['required', 'email'],
-            'margin_id' => ['required', 'numeric', 'exists:margins,id']
-        ]));
+        $client = $this->repository->update($request, $client);
 
         return redirect(route('clients.index'));
     }
@@ -99,7 +96,7 @@ class ClientController extends Controller
      */
     public function destroy(Client $client)
     {
-        $client->delete();
+        $this->repository->delete($client);
         return redirect(route('clients.index'));
     }
 }
