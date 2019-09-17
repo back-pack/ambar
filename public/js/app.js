@@ -2024,10 +2024,14 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
+      user: {
+        is_admin: false
+      },
       form: new _classes_Form__WEBPACK_IMPORTED_MODULE_0__["default"]({
         client_id: 1,
         delivery: null,
@@ -2037,18 +2041,44 @@ __webpack_require__.r(__webpack_exports__);
         weight: 0.00
       }),
       margin_profit: 0,
+      items_below_cost: false,
       system_error: null
     };
   },
+  created: function created() {
+    var _this = this;
+
+    axios.get('/api/user').then(function (_ref) {
+      var data = _ref.data;
+      return _this.user = data.data;
+    })["catch"](function (data) {
+      if (!data.errors) {
+        _this.system_error = data;
+      }
+    });
+  },
+  computed: {
+    disable_submit: function disable_submit() {
+      if (this.user.is_admin) {
+        return false;
+      }
+
+      if (!this.items_below_cost) {
+        return false;
+      }
+
+      return true;
+    }
+  },
   methods: {
     submitForm: function submitForm() {
-      var _this = this;
+      var _this2 = this;
 
       this.form.submit('post', '/orders').then(function (data) {
         return window.location.href = "/orders/" + data;
       })["catch"](function (data) {
         if (!data.errors) {
-          _this.system_error = data;
+          _this2.system_error = data;
         }
       });
     },
@@ -2067,10 +2097,10 @@ __webpack_require__.r(__webpack_exports__);
         is_below_cost: is_below_cost
       });
     },
-    updateItem: function updateItem(_ref) {
-      var index = _ref.index,
-          field = _ref.field,
-          value = _ref.value;
+    updateItem: function updateItem(_ref2) {
+      var index = _ref2.index,
+          field = _ref2.field,
+          value = _ref2.value;
       this.form.articles[index][field] = value;
     },
     removeItem: function removeItem(index) {
@@ -2081,6 +2111,9 @@ __webpack_require__.r(__webpack_exports__);
     },
     updateTotal: function updateTotal(value) {
       this.form.total = value;
+    },
+    updateItemsBelowCost: function updateItemsBelowCost(value) {
+      this.items_below_cost = value;
     },
     updateWeight: function updateWeight(value) {
       this.form.weight = value;
@@ -2534,6 +2567,9 @@ __webpack_require__.r(__webpack_exports__);
     },
     weight: function weight(value) {
       this.$emit('update-weight', value);
+    },
+    items_below_cost: function items_below_cost(value) {
+      this.$emit('update-items-below-cost', value);
     }
   },
   methods: {
@@ -39098,7 +39134,8 @@ var render = function() {
           "update-item": _vm.updateItem,
           "remove-item": _vm.removeItem,
           "update-total": _vm.updateTotal,
-          "update-weight": _vm.updateWeight
+          "update-weight": _vm.updateWeight,
+          "update-items-below-cost": _vm.updateItemsBelowCost
         }
       }),
       _vm._v(" "),
@@ -39137,7 +39174,7 @@ var render = function() {
         "button",
         {
           staticClass: "btn btn-primary",
-          attrs: { type: "button" },
+          attrs: { type: "button", disabled: _vm.disable_submit },
           on: {
             click: function($event) {
               $event.preventDefault()
@@ -52010,6 +52047,14 @@ if (token) {
   window.axios.defaults.headers.common['X-CSRF-TOKEN'] = token.content;
 } else {
   console.error('CSRF token not found: https://laravel.com/docs/csrf#csrf-x-csrf-token');
+}
+
+var api_token = document.head.querySelector('meta[name="api-token"]');
+
+if (api_token) {
+  window.axios.defaults.headers.common['Authorization'] = 'Bearer ' + api_token.content;
+} else {
+  console.error('API token not found');
 }
 /**
  * Echo exposes an expressive API for subscribing to channels and listening
