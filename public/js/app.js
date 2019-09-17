@@ -2254,6 +2254,7 @@ __webpack_require__.r(__webpack_exports__);
         weight: 0.00
       }),
       margin_profit: 0,
+      items_below_cost: false,
       system_error: null
     };
   },
