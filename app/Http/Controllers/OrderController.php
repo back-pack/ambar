@@ -3,13 +3,20 @@
 namespace App\Http\Controllers;
 
 use App\Order;
-use App\OrderArticle;
 use App\Http\Requests\OrderRequest;
+use App\Repositories\OrderRepository;
 use App\Http\Resources\Order as OrderResource;
 use Illuminate\Http\Request;
 
 class OrderController extends Controller
 {
+    private $repository;
+
+    public function __construct(OrderRepository $repository)
+    {
+        $this->repository = $repository;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -17,24 +24,7 @@ class OrderController extends Controller
      */
     public function index(Request $request)
     {
-        $orders = Order::whereNotNull('created_at');
-
-        if ($request->query('created_at')) {
-            $date = \Carbon\Carbon::create($request->query('created_at'));
-            $orders = $orders->createdAt($date);
-        }
-
-        if ($request->query('delivery')) {
-            if ($request->query('delivery') == 1) {
-                $orders = $orders->withDeliveryNull();
-            }
-            else {
-                $date = \Carbon\Carbon::create($request->query('delivery'));
-                $orders = $orders->delivery($date);
-            }
-        }
-
-        $orders = $orders->paginate(config('pagination.model.order'));
+        $orders = $this->repository->all();
 
         return view('model.order.index', compact('orders'));
     }
@@ -57,20 +47,7 @@ class OrderController extends Controller
      */
     public function store(OrderRequest $request)
     {
-        $attributes = $request->validated();
-
-        $order = Order::create(\Arr::only($attributes, ['client_id', 'delivery', 'detail', 'total', 'weight']));
-
-        foreach ($attributes['articles'] as $order_item) {
-            $article = new \App\OrderArticle([
-                'article_id' => $order_item['article']['id'],
-                'quantity' => $order_item['quantity'],
-                'discount' => $order_item['discount'],
-                'price' => $order_item['price'],
-                'is_below_cost' => $order_item['is_below_cost'],
-            ]);
-            $order->articles()->save($article);
-        }
+        $order = $this->repository->create($request);
 
         return $order->id;
     }
@@ -107,55 +84,7 @@ class OrderController extends Controller
      */
     public function update(OrderRequest $request, Order $order)
     {
-        $attributes = $request->validated();
-
-        $order->update(\Arr::only($attributes, ['client_id', 'delivery', 'detail', 'total', 'weight']));
-
-        // Get the items from the form
-        $items = array_filter($attributes['articles'], function ($item) {
-            return array_key_exists('id', $item);
-        });
-
-        // Get the IDs of the items from the form
-        $itemIds = \Arr::pluck($items, 'id');
-
-        // Get the IDs of the items that are already in the order
-        $articleIds = \Arr::pluck($order->articles->toArray(), 'id');
-
-        // Get the items that where deleted from the form
-        $toDelete = array_diff($articleIds, $itemIds);
-
-        // Delete the items
-        OrderArticle::destroy($toDelete);
-
-        // Update the items
-        foreach ($items as $item) {
-            $order_article = \App\OrderArticle::find($item['id']);
-            $order_article->update([
-                'article_id' => $item['article']['id'],
-                'quantity' => $item['quantity'],
-                'discount' => $item['discount'],
-                'price' => $item['price'],
-                'is_below_cost' => $item['is_below_cost'],
-            ]);
-        }
-
-        // Get the items that where added in the form
-        $newItems = array_filter($attributes['articles'], function ($item) {
-            return !array_key_exists('id', $item);
-        });
-
-        // Create the new items
-        foreach ($newItems as $item) {
-            $article = new \App\OrderArticle([
-                'article_id' => $item['article']['id'],
-                'quantity' => $item['quantity'],
-                'discount' => $item['discount'],
-                'price' => $item['price'],
-                'is_below_cost' => $item['is_below_cost'],
-            ]);
-            $order->articles()->save($article);
-        }
+        $this->repository->update($request, $order);
 
         return $order->id;
     }
@@ -168,8 +97,8 @@ class OrderController extends Controller
      */
     public function destroy(Order $order)
     {
-        $order->articles()->delete();
-        $order->delete();
+        $this->repository->delete($order);
+        
         return redirect(route('orders.index'));
     }
 }
