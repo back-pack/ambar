@@ -7,6 +7,7 @@ use App\Order;
 use App\Http\Resources\Article as ArticleResource;
 use App\Http\Resources\Client as ClientResource;
 use App\Http\Resources\Order as OrderResource;
+use App\Http\Resources\User as UserResource;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,30 +20,34 @@ use App\Http\Resources\Order as OrderResource;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
+Route::middleware(['auth:api'])->group(function () {
 
-Route::get('orders/{order}', function (Order $order) {
-    return new OrderResource($order);
-});
+    Route::get('/user', function (Request $request) {
+        return new UserResource($request->user());
+    });
 
-Route::get('articles', function (Request $request) {
+    Route::get('orders/{order}', function (Order $order) {
+        return new OrderResource($order);
+    });
 
-    if ($request->query('search')) {
-        $articles = Article::where('name', 'like', $request->query('search').'%')->take(5)->get();
-    } else {
-        $articles = Article::all();
-    }
+    Route::get('articles', function (Request $request) {
 
-    return ArticleResource::collection($articles);
-});
+        if ($request->query('search')) {
+            $articles = Article::where('name', 'like', $request->query('search').'%')->take(5)->get();
+        } else {
+            $articles = Article::all();
+        }
 
-Route::get('articles/{article}', function (Article $article) {
-    return new ArticleResource($article);
-});
+        return ArticleResource::collection($articles);
+    });
 
-Route::get('clients', function (Request $request) {
-    $clients = Client::all();
-    return ClientResource::collection($clients);
+    Route::get('articles/{article}', function (Article $article) {
+        return new ArticleResource($article);
+    });
+
+    Route::get('clients', function (Request $request) {
+        $clients = Client::all();
+        return ClientResource::collection($clients);
+    });
+
 });
