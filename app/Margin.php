@@ -16,4 +16,9 @@ class Margin extends Model
     {
         return $this->hasMany('App\Client');
     }
+
+    public function asSelectOption()
+    {
+        return [$this->id, $this->name];
+    }
 }
