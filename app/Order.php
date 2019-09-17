@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Pipeline\Pipeline;
 
 class Order extends Model
 {
@@ -27,6 +28,21 @@ class Order extends Model
     public function articles()
     {
         return $this->hasMany('App\OrderArticle');
+    }
+
+    /**
+     * Static functions
+     */
+
+    public static function filtered()
+    {
+        return app(Pipeline::class)
+            ->send(Order::query())
+            ->through([
+                \App\QueryFilters\CreatedAt::class,
+                \App\QueryFilters\Delivery::class
+            ])
+            ->thenReturn();
     }
 
     /**
