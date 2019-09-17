@@ -3,10 +3,19 @@
 namespace App\Http\Controllers;
 
 use App\Margin;
+use App\Repositories\MarginRepository;
+use App\Http\Requests\MarginRequest;
 use Illuminate\Http\Request;
 
 class MarginController extends Controller
 {
+    private $repository;
+
+    public function __construct(MarginRepository $repository)
+    {
+        $this->repository = $repository;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +23,7 @@ class MarginController extends Controller
      */
     public function index()
     {
-        $margins = Margin::paginate(config('pagination.model.margin'));
+        $margins = $this->repository->all();
         return view('model.margin.index', compact('margins'));
     }
 
@@ -34,12 +43,9 @@ class MarginController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(MarginRequest $request)
     {
-        Margin::create($request->validate([
-            'name' => ['required', 'max:30'],
-            'profit' => ['required', 'numeric', 'min:0']
-        ]));
+        $margin = $this->repository->create($request);
 
         return redirect(route('margins.index'));
     }
@@ -73,12 +79,9 @@ class MarginController extends Controller
      * @param  \App\Margin  $margin
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Margin $margin)
+    public function update(MarginRequest $request, Margin $margin)
     {
-        $margin->update($request->validate([
-            'name' => ['required', 'max:30'],
-            'profit' => ['required', 'numeric', 'min:0']
-        ]));
+        $margin = $this->repository->update($request, $margin);
 
         return redirect(route('margins.index'));
     }
@@ -91,7 +94,8 @@ class MarginController extends Controller
      */
     public function destroy(Margin $margin)
     {
-        $margin->delete();
+        $this->repository->delete($margin);
+
         return redirect(route('margins.index'));
     }
 }
