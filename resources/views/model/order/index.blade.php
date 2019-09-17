@@ -53,7 +53,7 @@
         </tbody>
       </table>
 
-      {{ $orders->appends(['delivery' => request()->query('delivery'), 'created_at' => request()->query('created_at')])->links() }}
+      {{ $orders->appends(request()->input())->links() }}
     </div>
 
 
