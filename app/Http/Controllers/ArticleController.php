@@ -15,6 +15,7 @@ class ArticleController extends Controller
     {
         $this->repository = $repository;
         $this->middleware('auth');
+        $this->authorizeResource(Article::class, 'article');
     }
 
     /**

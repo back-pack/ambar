@@ -14,6 +14,8 @@ class MarginController extends Controller
     public function __construct(MarginRepository $repository)
     {
         $this->repository = $repository;
+        $this->middleware('auth');
+        $this->authorizeResource(Margin::class, 'margin');
     }
 
     /**

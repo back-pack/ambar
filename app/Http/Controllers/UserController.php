@@ -14,6 +14,7 @@ class UserController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+        $this->authorizeResource(User::class, 'user');
     }
 
     /**
@@ -47,7 +48,7 @@ class UserController extends Controller
     public function store(StoreUserRequest $request, UserRepository $userRepo)
     {
         $userRepo->create($request);
-        return redirect(route('users.index'))->with('success','El usuario se creó correctamente.');    
+        return redirect(route('users.index'))->with('success','El usuario se creó correctamente.');
     }
 
     /**
@@ -83,7 +84,7 @@ class UserController extends Controller
     public function update(StoreUserRequest $request, UserRepository $userRepo, $id)
     {
         $userRepo->update($request, $id);
-        return redirect(route('users.index'))->with('success', 'Los datos se actualizaron correctamente.');    
+        return redirect(route('users.index'))->with('success', 'Los datos se actualizaron correctamente.');
     }
 
     /**
@@ -96,6 +97,6 @@ class UserController extends Controller
     public function destroy(UserRepository $userRepo, $id)
     {
         $userRepo->delete($id);
-        return redirect(route('users.index'))->with('success','El registro fue eliminado correctamente.');    
+        return redirect(route('users.index'))->with('success','El registro fue eliminado correctamente.');
     }
 }

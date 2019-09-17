@@ -15,6 +15,8 @@ class OrderController extends Controller
     public function __construct(OrderRepository $repository)
     {
         $this->repository = $repository;
+        $this->middleware('auth');
+        $this->authorizeResource(Order::class, 'order');
     }
 
     /**
@@ -98,7 +100,7 @@ class OrderController extends Controller
     public function destroy(Order $order)
     {
         $this->repository->delete($order);
-        
+
         return redirect(route('orders.index'));
     }
 }
