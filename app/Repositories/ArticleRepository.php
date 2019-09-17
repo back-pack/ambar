@@ -34,7 +34,7 @@ class ArticleRepository
         return $article;
     }
 
-    public function delete(Article $article):
+    public function delete(Article $article)
     {
         $article->delete();
     }
