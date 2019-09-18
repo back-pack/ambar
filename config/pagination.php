@@ -2,9 +2,9 @@
 
 return [
     'model' => [
-        'article' => 2,
-        'client' => 2,
-        'margin' => 2,
-        'order' => 2,
+        'article' => 15,
+        'client' => 15,
+        'margin' => 15,
+        'order' => 15,
     ]
 ];
