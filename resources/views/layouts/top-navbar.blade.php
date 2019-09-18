@@ -16,7 +16,7 @@
                     <div class="dropdown-menu" aria-labelledby="dropdown01">
                     @nav_dropdown_item(['href' => route('margins.index'), 'url' => 'margins', 'text' => 'Margenes'])
                     @nav_dropdown_item(['href' => route('clients.index'), 'url' => 'clients', 'text' => 'Clientes'])
-                    <a class="dropdown-item" href="#">Usuarios</a>
+                    @nav_dropdown_item(['href' => route('users.index'), 'url' => 'users', 'text' => 'Usuarios'])
                     </div>
                 </li>
 
