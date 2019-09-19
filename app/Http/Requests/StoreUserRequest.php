@@ -15,7 +15,7 @@ class StoreUserRequest extends FormRequest
     {
         $rules = [
             'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email,'.$this->user],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email,'.$this->user->id],
             'phone' => ['string', 'min:8'],
         ];
         if($this->method() == "POST") {

@@ -11,8 +11,11 @@ use App\Http\Requests\StoreUserRequest;
 
 class UserController extends Controller
 {
-    public function __construct()
+    private $reporsitory;
+
+    public function __construct(UserRepository $reporsitory)
     {
+        $this->reporsitory = $reporsitory;
         $this->middleware('auth');
         $this->authorizeResource(User::class, 'user');
     }
@@ -45,9 +48,9 @@ class UserController extends Controller
      * @return UserRepository $userRepo
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreUserRequest $request, UserRepository $userRepo)
+    public function store(StoreUserRequest $request)
     {
-        $userRepo->create($request);
+        $this->reporsitory->create($request);
         return redirect(route('users.index'))->with('success','El usuario se creó correctamente.');
     }
 
@@ -81,9 +84,9 @@ class UserController extends Controller
      * @param $id
      * @return \Illuminate\Http\Response
      */
-    public function update(StoreUserRequest $request, UserRepository $userRepo, $id)
+    public function update(StoreUserRequest $request, User $user)
     {
-        $userRepo->update($request, $id);
+        $this->reporsitory->update($request, $user->id);
         return redirect(route('users.index'))->with('success', 'Los datos se actualizaron correctamente.');
     }
 
@@ -94,9 +97,9 @@ class UserController extends Controller
      * @param $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(UserRepository $userRepo, $id)
+    public function destroy(User $user)
     {
-        $userRepo->delete($id);
+        $this->reporsitory->delete($user->id);
         return redirect(route('users.index'))->with('success','El registro fue eliminado correctamente.');
     }
 }
