@@ -8,8 +8,8 @@
 
 
     <div class="col-sm">
-      <p class='h2'>Pedidos | <a href="{{ route('orders.create') }}" ><button class="btn btn-sm btn-outline-success" type="button"><i class="fas fa-plus-square"></i></button></a> <button onclick="alert('Imprime lista')" class="btn btn-sm btn-outline-secondary" type="button"><i class="fas fa-print"></i></button> <button onclick="hide()" class="btn btn-sm btn-outline-primary" type="button"><i class="fas fa-tools"></i></button></p>
-        <form method="get" action="{{ route('orders.index') }}" class="form-inline">
+      <p class='h2'>Pedidos | <a href="{{ route('orders.create') }}" ><button class="btn btn-sm btn-outline-success" type="button"><i class="fas fa-plus-square"></i></button></a> <button onclick="window.print()" class="btn btn-sm btn-outline-secondary" type="button"><i class="fas fa-print"></i></button> <button onclick="hide()" class="btn btn-sm btn-outline-primary" type="button"><i class="fas fa-tools"></i></button></p>
+        <form method="get" action="{{ route('orders.index') }}" class="form-inline d-print-none">
             @select([
                 'name' => 'delivery',
                 'label' => 'Entrega',
