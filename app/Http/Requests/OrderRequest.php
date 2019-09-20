@@ -25,7 +25,7 @@ class OrderRequest extends FormRequest
     {
         return [
             'client_id' => ['required', 'integer', 'exists:clients,id'],
-            'delivery' => ['nullable', 'date'],
+            'delivery' => ['nullable', 'date', 'after:today'],
             'articles' => ['required', 'array', 'filled'],
             'articles.*.article.id' => ['required', 'integer', 'exists:articles,id'],
             'articles.*.quantity' => ['required', 'numeric', 'min:1'],
@@ -33,6 +33,13 @@ class OrderRequest extends FormRequest
             'detail' => ['nullable', 'string'],
             'total' => ['required', 'numeric'],
             'weight' => ['required', 'numeric']
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'delivery.after' => 'El campo entrega debe ser una fecha después de hoy.'
         ];
     }
 }
