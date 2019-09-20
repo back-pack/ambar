@@ -6,7 +6,6 @@
                 :key="index"
                 :index="index"
                 :item="item"
-                :margin="margin"
                 :errors="errors"
                 @update-item="updateItem"
                 @remove-item="removeItem"
@@ -35,7 +34,6 @@ import numeral from 'numeral'
 export default {
     props: {
         items: Array,
-        margin: Number,
         errors: Object,
     },
     computed: {

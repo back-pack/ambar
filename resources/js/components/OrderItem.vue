@@ -69,13 +69,12 @@
 export default {
     props: {
         item: Object,
-        margin: Number,
         index: Number,
         errors: Object,
     },
     computed: {
         price() {
-            return this.item.article.cost + this.item.article.cost * (this.margin / 100)
+            return this.item.article.cost + this.item.article.margin
         },
         subtotal() {
             return (this.price * this.item.quantity) - (this.price * this.item.quantity) * (this.item.discount / 100)

@@ -12,7 +12,14 @@
 
         <div class="form-group">
             <div class="input-group" v-show="showDateInput">
-                <input type="date" class="form-control" name="delivery" :value="value" @input="updateValue($event.target.value)">
+                <input
+                    type="date"
+                    :class="errors.has('delivery') ? 'form-control is-invalid' : 'form-control'"
+                    name="delivery"
+                    :value="value"
+                    @input="updateValue($event.target.value)"
+                >
+                <span class="invalid-feedback" v-text="errors.get('delivery')"></span>
             </div>
         </div>
     </div>
@@ -21,11 +28,13 @@
 <script>
 export default {
     props: {
-        value: String
+        value: String,
+        errors: Object
     },
     data() {
         return {
-            showDateInput: false
+            showDateInput: false,
+            today: new Date().toJSON().split('T')[0]
         }
     },
     methods: {

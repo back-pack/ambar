@@ -26,7 +26,6 @@ export default {
         axios.get('/api/clients')
             .then(({data}) => {
                 this.clients = data.data
-                this.updateMargin(this.clients[0].margin_profit)
             })
             .finally(() => this.loading = false)
     },
@@ -34,10 +33,6 @@ export default {
         updateValue(value) {
             let client = this.clients.find(client => client.id == value)
             this.$emit('input', client.id)
-            this.updateMargin(client.margin_profit)
-        },
-        updateMargin(value) {
-            this.$emit('update-margin', value)
         }
     }
 

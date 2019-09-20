@@ -3,11 +3,11 @@
 
         <client-select
             v-model="form.client_id"
-            @update-margin="updateMargin"
         ></client-select>
 
         <delivery-switch
             v-model="form.delivery"
+            :errors="form.errors"
         ></delivery-switch>
 
         <article-search-input
@@ -17,7 +17,6 @@
 
         <order-item-list
             :items="form.articles"
-            :margin="margin_profit"
             :errors="form.errors"
             @update-item="updateItem"
             @remove-item="removeItem"
@@ -55,7 +54,6 @@ export default {
                 total: 0.00,
                 weight: 0.00,
             }),
-            margin_profit: 0,
             items_below_cost: false,
             system_error: null
         }
@@ -93,7 +91,7 @@ export default {
         addItem(article) {
             let quantity = 1
             let discount = 0
-            let price = article.cost + ((this.margin_profit * article.cost) / 100)
+            let price = article.cost + article.margin
             let subtotal = price * quantity
             let is_below_cost = false
 
@@ -111,9 +109,6 @@ export default {
         },
         removeItem(index) {
             this.form.articles.splice(index, 1)
-        },
-        updateMargin(value) {
-            this.margin_profit = value
         },
         updateTotal(value) {
             this.form.total = value
