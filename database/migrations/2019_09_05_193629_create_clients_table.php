@@ -17,7 +17,6 @@ class CreateClientsTable extends Migration
             $table->bigIncrements('id');
             $table->string('name', 30);
             $table->string('email', 30);
-            $table->bigInteger('margin_id');
             $table->timestamps();
         });
     }

@@ -16,8 +16,7 @@ class Client extends JsonResource
     {
         return [
             'id' => $this->id,
-            'name' => $this->name,
-            'margin_profit' => (float) $this->margin->profit
+            'name' => $this->name
         ];
     }
 }
