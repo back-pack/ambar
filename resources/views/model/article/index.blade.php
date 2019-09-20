@@ -16,7 +16,7 @@
             <th scope="col">Nombre</th>
             <th scope="col">Descripción</th>
             <th scope="col">Costo</th>
-            <th scope="col">Ultima actualización</th>
+            <th scope="col">Margen</th>
             <th class="config" scope="col"><i class="fas fa-tools config"></i></th>
           </tr>
         </thead>
@@ -27,7 +27,7 @@
               <td>{{ $article->name }}</td>
               <td>{{ $article->description }}</td>
               <td>{{ number_readable($article->cost, "$") }}</td>
-              <td>{{ $article->cost_last_update->format('d/m/Y') }}</td>
+              <td>{{ number_readable($article->margin, "$") }}</td>
               <td class='config'><a href="{{ route('articles.edit', ['id' => $article->id]) }}"><button type="button" class="btn btn-sm btn-outline-warning config"><i class="fas fa-wrench"></i></button></a></td>
             </tr>
           @endforeach

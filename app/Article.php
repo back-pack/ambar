@@ -6,9 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Article extends Model
 {
-    protected $fillable = ['name', 'description', 'cost', 'cost_last_update', 'weight'];
+    protected $fillable = ['name', 'description', 'cost', 'cost_last_update', 'margin', 'margin_last_update', 'weight'];
 
-    protected $dates = ['cost_last_update'];
+    protected $dates = ['cost_last_update', 'margin_last_update'];
 
     protected $casts = [
         'cost' => 'decimal:2',

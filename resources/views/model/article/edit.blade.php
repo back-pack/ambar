@@ -15,7 +15,7 @@
 
       <div class="form-row">
 
-        <div class="col-md-4">
+        <div class="col-md-3">
           @input([
             'name' => 'name',
             'label' => 'Nombre',
@@ -24,7 +24,7 @@
           ])
         </div>
 
-        <div class="col-md-4">
+        <div class="col-md-3">
           @input([
             'name' => 'cost',
             'label' => 'Costo',
@@ -34,7 +34,17 @@
           ])
         </div>
 
-        <div class="col-md-4">
+        <div class="col-md-3">
+          @input([
+            'name' => 'margin',
+            'label' => 'Margen',
+            'input_group_prepend_text' => ['$'],
+            'attributes' => ['type' => 'number', 'step' => 'any'],
+            'value' => $article->margin
+          ])
+        </div>
+
+        <div class="col-md-3">
           @input([
             'name' => 'weight',
             'label' => 'Peso',
@@ -52,8 +62,6 @@
         'attributes' => ['type' => 'text'],
         'value' => $article->description
       ])
-
-      @include('components.form.bootstrap.form-errors')
 
       <button type="submit" class="btn btn-primary">Editar</button>
     </form>

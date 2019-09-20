@@ -27,6 +27,7 @@ class ArticleRequest extends FormRequest
             'name'          => ['required', 'string'],
             'description'   => ['required', 'string'],
             'cost'          => ['required', 'numeric'],
+            'margin'        => ['required', 'numeric'],
             'weight'        => ['required', 'numeric']
         ];
     }

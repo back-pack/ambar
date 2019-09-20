@@ -14,7 +14,7 @@
 
       <div class="form-row">
 
-        <div class="col-md-4">
+        <div class="col-md-3">
           @input([
             'name' => 'name',
             'label' => 'Nombre',
@@ -22,16 +22,25 @@
           ])
         </div>
 
-        <div class="col-md-4">
+        <div class="col-md-3">
           @input([
             'name' => 'cost',
             'label' => 'Costo',
             'input_group_prepend_text' => ['$'],
-            'attributes' => ['type' => 'number', 'step' => 'any']
+            'attributes' => ['type' => 'number', 'step' => 'any', 'min' => 0]
           ])
         </div>
 
-        <div class="col-md-4">
+        <div class="col-md-3">
+          @input([
+            'name' => 'margin',
+            'label' => 'Margen',
+            'input_group_prepend_text' => ['$'],
+            'attributes' => ['type' => 'number', 'step' => 'any', 'min' => 0]
+          ])
+        </div>
+
+        <div class="col-md-3">
           @input([
             'name' => 'weight',
             'label' => 'Peso',

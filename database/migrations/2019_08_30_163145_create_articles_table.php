@@ -19,6 +19,8 @@ class CreateArticlesTable extends Migration
             $table->text('description');
             $table->decimal('cost', 8, 2);
             $table->date('cost_last_update');
+            $table->decimal('margin', 8, 2);
+            $table->date('margin_last_update');
             $table->decimal('weight', 8, 2);
             $table->timestamps();
         });

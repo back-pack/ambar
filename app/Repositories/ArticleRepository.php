@@ -17,6 +17,7 @@ class ArticleRepository
         $attributes = $request->validated();
 
         $attributes['cost_last_update'] = now();
+        $attributes['margin_last_update'] = now();
 
         return Article::create($attributes);
     }
@@ -27,6 +28,10 @@ class ArticleRepository
 
         if ($request->input('cost') !== $article->cost) {
             $attributes['cost_last_update'] = now();
+        }
+
+        if ($request->input('margin') !== $article->margin) {
+            $attributes['margin_last_update'] = now();
         }
 
         $article->update($attributes);
