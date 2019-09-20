@@ -36,8 +36,7 @@ class ClientController extends Controller
      */
     public function create()
     {
-        $margins = \App\Margin::all()->map->asSelectOption();
-        return view('model.client.create', compact('margins'));
+        return view('model.client.create');
     }
 
     /**
@@ -72,8 +71,7 @@ class ClientController extends Controller
      */
     public function edit(Client $client)
     {
-        $margins = \App\Margin::all()->map->asSelectOption();
-        return view('model.client.edit', compact('client', 'margins'));
+        return view('model.client.edit', compact('client'));
     }
 
     /**

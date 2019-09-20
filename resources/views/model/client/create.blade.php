@@ -21,12 +21,6 @@
             'attributes' => ['type' => 'email']
         ])
 
-        @select([
-            'name' => 'margin_id',
-            'label' => 'Margen',
-            'options' => $margins
-        ])
-
         <button type="submit" class="btn btn-primary">Crear cliente</button>
 
     </form>

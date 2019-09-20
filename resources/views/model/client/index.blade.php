@@ -13,7 +13,6 @@
           <tr>
             <th scope="col">Nombre</th>
             <th scope="col">Correo electrónico</th>
-            <th scope="col">Margen</th>
             <th class="config" scope="col"><i class="fas fa-tools config"></i></th>
           </tr>
         </thead>
@@ -22,7 +21,6 @@
             <tr>
               <td scope="row">{{ $client->name }}</td>
               <td>{{ $client->email }}</td>
-              <td>{{ $client->margin->name }}</td>
               <td class='config'><a href="{{ route('clients.edit', ['id' => $client->id]) }}"><button type="button" class="btn btn-sm btn-outline-warning config"><i class="fas fa-wrench"></i></button></a></td>
             </tr>
           @endforeach

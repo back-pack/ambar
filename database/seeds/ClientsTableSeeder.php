@@ -12,9 +12,9 @@ class ClientsTableSeeder extends Seeder
     public function run()
     {
         $clients = [
-            ['name' => 'German Amigo', 'email' => 'keepemailsforme@gmail.com', 'margin_id' => 1],
-            ['name' => 'Marcos Cliente Regular', 'email' => 'keepemailsforme@gmail.com', 'margin_id' => 2],
-            ['name' => 'Julio Cliente general', 'email' => 'keepemailsforme@gmail.com', 'margin_id' => 3],
+            ['name' => 'German Amigo', 'email' => 'keepemailsforme@gmail.com'],
+            ['name' => 'Marcos Cliente Regular', 'email' => 'keepemailsforme@gmail.com'],
+            ['name' => 'Julio Cliente general', 'email' => 'keepemailsforme@gmail.com'],
         ];
 
         foreach ($clients as $client) {

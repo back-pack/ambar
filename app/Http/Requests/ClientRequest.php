@@ -25,8 +25,7 @@ class ClientRequest extends FormRequest
     {
         return [
             'name'      => ['required', 'max:30'],
-            'email'     => ['required', 'email'],
-            'margin_id' => ['required', 'numeric', 'exists:margins,id']
+            'email'     => ['required', 'email']
         ];
     }
 }

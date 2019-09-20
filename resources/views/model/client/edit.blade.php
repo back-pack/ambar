@@ -24,13 +24,6 @@
             'value' => $client->email
         ])
 
-        @select([
-            'name' => 'margin_id',
-            'label' => 'Margen',
-            'options' => $margins,
-            'value' => $client->margin_id
-        ])
-
         <button type="submit" class="btn btn-primary">Editar cliente</button>
 
     </form>
