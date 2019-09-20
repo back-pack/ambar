@@ -142,13 +142,15 @@ return [
     */
 
     'attributes' => [
-        'name' => 'nombre',
-        'email' => 'correo eletrónico',
-        'description' => 'descripción',
-        'cost' => 'costo',
-        'weight' => 'peso',
-        'profit' => 'ganancia',
-        'articles' => 'artículos',
+        'name'          => 'nombre',
+        'email'         => 'correo eletrónico',
+        'description'   => 'descripción',
+        'cost'          => 'costo',
+        'margin'        => 'margen',
+        'weight'        => 'peso',
+        'delivery'      => 'entrega',
+        'profit'        => 'ganancia',
+        'articles'      => 'artículos',
         'articles.*.quantity' => 'cantidad',
         'articles.*.discount' => 'descuento',
     ],
