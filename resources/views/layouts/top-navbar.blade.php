@@ -14,7 +14,6 @@
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Admin</a>
                     <div class="dropdown-menu" aria-labelledby="dropdown01">
-                    @nav_dropdown_item(['href' => route('margins.index'), 'url' => 'margins', 'text' => 'Margenes'])
                     @nav_dropdown_item(['href' => route('clients.index'), 'url' => 'clients', 'text' => 'Clientes'])
                     @nav_dropdown_item(['href' => route('users.index'), 'url' => 'users', 'text' => 'Usuarios'])
                     </div>

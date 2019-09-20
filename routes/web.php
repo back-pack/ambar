@@ -16,7 +16,6 @@ Route::get('/', function () {
 });
 
 Route::resource('clients', 'ClientController');
-Route::resource('margins', 'MarginController');
 Route::resource('orders', 'OrderController');
 Route::resource('articles', 'ArticleController');
 Route::resource('users', 'UserController');
@@ -24,4 +23,4 @@ Route::resource('users', 'UserController');
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
-Route::get('/logout', '\App\Http\Controllers\Auth\LoginController@logout');
+Route::get('/logout', 'Auth\LoginController@logout');
