@@ -15,6 +15,8 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('articles/pdf', 'ArticleController@pdf')->name('articles.pdf');
+
 Route::resource('clients', 'ClientController');
 Route::resource('orders', 'OrderController');
 Route::resource('articles', 'ArticleController');
