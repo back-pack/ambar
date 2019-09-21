@@ -43,4 +43,30 @@ class ArticleRepository
     {
         $article->delete();
     }
+
+    public function pdf()
+    {
+        $articles = Article::all();
+        $date = now()->format('d-m-Y');
+        $filename = 'articulos_'.$date.'.pdf';
+
+        $files = \Storage::files('pdf');
+
+        if (empty($files)) {
+            $pdf = \PDF::loadView('model.article.pdf.list', compact('articles', 'date'))->setPaper('a4', 'landscape');
+            $pdf->save(storage_path("app/pdf/{$filename}"));
+
+            return \Storage::download("pdf/{$filename}");
+        }
+        else if ($files[0] !== "pdf/{$filename}") {
+            \Storage::delete($files[0]);
+
+            $pdf = \PDF::loadView('model.article.pdf.list', compact('articles', 'date'))->setPaper('a4', 'landscape');
+            $pdf->save(storage_path("app/pdf/{$filename}"));
+
+            return \Storage::download("pdf/{$filename}");
+        }
+
+        return \Storage::download($files[0]);
+    }
 }

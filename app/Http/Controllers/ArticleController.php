@@ -29,6 +29,11 @@ class ArticleController extends Controller
         return view('model.article.index', compact('articles'));
     }
 
+    public function pdf()
+    {
+        return $this->repository->pdf();
+    }
+
     /**
      * Show the form for creating a new resource.
      *
