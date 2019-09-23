@@ -25,7 +25,7 @@ class ArticleRequest extends FormRequest
     {
         return [
             'name'          => ['required', 'string'],
-            'description'   => ['required', 'string'],
+            'description'   => ['present'],
             'cost'          => ['required', 'numeric'],
             'margin'        => ['required', 'numeric'],
             'weight'        => ['required', 'numeric']

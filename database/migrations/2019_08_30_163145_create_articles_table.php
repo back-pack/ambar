@@ -16,7 +16,7 @@ class CreateArticlesTable extends Migration
         Schema::create('articles', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name');
-            $table->text('description');
+            $table->text('description')->nullable();
             $table->decimal('cost', 8, 2);
             $table->date('cost_last_update');
             $table->decimal('margin', 8, 2);
