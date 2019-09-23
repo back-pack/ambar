@@ -49,24 +49,23 @@ class ArticleRepository
         $articles = Article::all();
         $date = now()->format('d-m-Y');
         $filename = 'articulos_'.$date.'.pdf';
-
         $files = \Storage::files('pdf');
+        $toDownload = "pdf/{$filename}";
 
         if (empty($files)) {
-            $pdf = \PDF::loadView('model.article.pdf.list', compact('articles', 'date'))->setPaper('a4', 'landscape');
+            $pdf = \PDF::loadView('model.article.pdf.list', compact('articles', 'date'));
             $pdf->save(storage_path("app/pdf/{$filename}"));
-
-            return \Storage::download("pdf/{$filename}");
         }
-        else if ($files[0] !== "pdf/{$filename}") {
+        else if ($files[0] !== $toDownload) {
             \Storage::delete($files[0]);
 
-            $pdf = \PDF::loadView('model.article.pdf.list', compact('articles', 'date'))->setPaper('a4', 'landscape');
+            $pdf = \PDF::loadView('model.article.pdf.list', compact('articles', 'date'));
             $pdf->save(storage_path("app/pdf/{$filename}"));
-
-            return \Storage::download("pdf/{$filename}");
+        }
+        else {
+            $toDownload = $files[0];
         }
 
-        return \Storage::download($files[0]);
+        return \Storage::download($toDownload);
     }
 }
