@@ -1,5 +1,5 @@
 <template>
-    <form class="needs-validation" @keydown="form.errors.clear($event.target.name)">
+    <form @input="form.errors.clear($event.target.name)">
 
         <client-select
             v-model="form.client_id"
