@@ -9,6 +9,7 @@
 
     <div class="col-sm">
       <p class='h2'>Articulos | <a href="{{ route('articles.create') }}" ><button class="btn btn-sm btn-outline-success" type="button"><i class="fas fa-plus-square"></i></button></a> <a href="{{ route('articles.pdf') }}"><button class="btn btn-sm btn-outline-secondary" type="button"><i class="fas fa-print"></i></button></a> <button onclick="hide()" class="btn btn-sm btn-outline-primary" type="button"><i class="fas fa-tools"></i></button></p>
+      <articles-search></articles-search>
       <table class="table table-hover table-responsive-sm">
         <thead class="thead-light">
           <tr>
