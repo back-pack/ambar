@@ -33,7 +33,7 @@ Route::middleware(['auth:api'])->group(function () {
     Route::get('articles', function (Request $request) {
 
         if ($request->query('search')) {
-            $articles = Article::where('name', 'like', '%'.$request->query('search').'%')->take(5)->get();
+            $articles = Article::where('name', 'like', '%'.$request->query('search').'%')->orWhere('id', 'like', $request->query('search'))->take(5)->get();
         } else {
             $articles = Article::all();
         }
