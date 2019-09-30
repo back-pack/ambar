@@ -2132,7 +2132,7 @@ __webpack_require__.r(__webpack_exports__);
     addItem: function addItem(article) {
       var quantity = 1;
       var discount = 0;
-      var price = article.cost + article.margin;
+      var price = article.price;
       var subtotal = price * quantity;
       var is_below_cost = false;
       this.form.articles.push({
@@ -2356,7 +2356,7 @@ __webpack_require__.r(__webpack_exports__);
     addItem: function addItem(article) {
       var quantity = 1;
       var discount = 0;
-      var price = article.cost + article.margin;
+      var price = article.price;
       var subtotal = price * quantity;
       var is_below_cost = false;
       this.form.articles.push({
@@ -2510,11 +2510,11 @@ __webpack_require__.r(__webpack_exports__);
     errors: Object
   },
   computed: {
-    price: function price() {
-      return this.item.article.cost + this.item.article.margin;
-    },
+    // price() {
+    //     return this.item.article.price
+    // },
     subtotal: function subtotal() {
-      return this.price * this.item.quantity - this.price * this.item.quantity * (this.item.discount / 100);
+      return this.item.article.price * this.item.quantity - this.item.article.price * this.item.quantity * (this.item.discount / 100);
     },
     subtotal_formatted: function subtotal_formatted() {
       return numeral(this.subtotal).format('$0,0.00');
@@ -2527,13 +2527,9 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   watch: {
-    price: function price(value) {
-      this.$emit('update-item', {
-        index: this.index,
-        field: 'price',
-        value: value
-      });
-    },
+    // price(value) {
+    //     this.$emit('update-item', {index: this.index, field: 'price', value: value})
+    // },
     subtotal: function subtotal(value) {
       this.$emit('update-item', {
         index: this.index,
@@ -39419,7 +39415,7 @@ var render = function() {
               staticClass: "custom-control-label",
               attrs: { for: "delivery-switch" }
             },
-            [_vm._v("Fecha pactada")]
+            [_vm._v("Venta en la calle")]
           )
         ])
       ])

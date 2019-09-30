@@ -91,7 +91,7 @@ export default {
         addItem(article) {
             let quantity = 1
             let discount = 0
-            let price = article.cost + article.margin
+            let price = article.price
             let subtotal = price * quantity
             let is_below_cost = false
 

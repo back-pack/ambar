@@ -73,11 +73,11 @@ export default {
         errors: Object,
     },
     computed: {
-        price() {
-            return this.item.article.cost + this.item.article.margin
-        },
+        // price() {
+        //     return this.item.article.price
+        // },
         subtotal() {
-            return (this.price * this.item.quantity) - (this.price * this.item.quantity) * (this.item.discount / 100)
+            return (this.item.article.price * this.item.quantity) - (this.item.article.price * this.item.quantity) * (this.item.discount / 100)
         },
         subtotal_formatted() {
             return numeral(this.subtotal).format('$0,0.00')
@@ -90,9 +90,9 @@ export default {
         }
     },
     watch: {
-        price(value) {
-            this.$emit('update-item', {index: this.index, field: 'price', value: value})
-        },
+        // price(value) {
+        //     this.$emit('update-item', {index: this.index, field: 'price', value: value})
+        // },
         subtotal(value) {
             this.$emit('update-item', {index: this.index, field: 'subtotal', value: value})
         },
