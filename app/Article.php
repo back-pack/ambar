@@ -24,4 +24,12 @@ class Article extends Model
         return '$' . number_format($this->attributes['cost'], 2, ',', '.');
     }
 
+    public function getPriceAttribute()
+    {
+        $price = (float) $this->cost + $this->margin;
+        $x = 5;
+
+        return (ceil($price) % $x === 0) ? ceil($price) : round(($price + $x / 2) / $x) * $x;
+    }
+
 }
