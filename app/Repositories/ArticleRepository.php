@@ -44,27 +44,22 @@ class ArticleRepository
         $article->delete();
     }
 
-    public function pdf()
+    public function pdf($type)
     {
         $articles = Article::all();
         $date = now()->format('d-m-Y');
-        $filename = 'articulos_'.$date.'.pdf';
+        $filename = 'articulos_'.$date.'_'.$type.'.pdf';
         $files = \Storage::files('pdf');
         $toDownload = "pdf/{$filename}";
 
-        if (empty($files)) {
-            $pdf = \PDF::loadView('model.article.pdf.list', compact('articles', 'date'));
-            $pdf->save(storage_path("app/pdf/{$filename}"));
-        }
-        else if ($files[0] !== $toDownload) {
-            \Storage::delete($files[0]);
-
-            $pdf = \PDF::loadView('model.article.pdf.list', compact('articles', 'date'));
-            $pdf->save(storage_path("app/pdf/{$filename}"));
+        if ($type == 'client') {
+            $pdf = \PDF::loadView('model.article.pdf.client-list', compact('articles', 'date'));
         }
         else {
-            $toDownload = $files[0];
+            $pdf = \PDF::loadView('model.article.pdf.list', compact('articles', 'date'));
         }
+
+        $pdf->save(storage_path("app/pdf/{$filename}"));
 
         return \Storage::download($toDownload);
     }

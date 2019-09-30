@@ -29,9 +29,9 @@ class ArticleController extends Controller
         return view('model.article.index', compact('articles'));
     }
 
-    public function pdf()
+    public function pdf(Request $request)
     {
-        return $this->repository->pdf();
+        return $this->repository->pdf($request->query('for'));
     }
 
     /**
