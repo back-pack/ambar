@@ -5,7 +5,7 @@
             <div class="input-group">
                 <div class="custom-control custom-switch">
                     <input type="checkbox" class="custom-control-input" id="delivery-switch" v-model="showDateInput">
-                    <label for="delivery-switch" class="custom-control-label">Fecha pactada</label>
+                    <label for="delivery-switch" class="custom-control-label">Venta en la calle</label>
                 </div>
             </div>
         </div>
