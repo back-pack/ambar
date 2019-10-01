@@ -26,9 +26,9 @@ class OrderController extends Controller
      */
     public function index(Request $request)
     {
-        $orders = $this->repository->all();
+        $orders = $this->repository->all()->paginate(config('pagination.model.order'));
 
-        $total_profit = $orders->sum('profit');
+        $total_profit = $this->repository->all()->get()->sum('profit');
 
         return view('model.order.index', compact('orders', 'total_profit'));
     }

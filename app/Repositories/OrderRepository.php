@@ -10,7 +10,7 @@ class OrderRepository
 {
     public function all()
     {
-        return Order::filtered()->paginate(config('pagination.model.order'));
+        return Order::filtered();
     }
 
     public function create(OrderRequest $request): Order
