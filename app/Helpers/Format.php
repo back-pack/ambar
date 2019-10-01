@@ -8,3 +8,10 @@ if (!function_exists('number_readable')) {
         return $prefix.$formatted.$suffix;
     }
 }
+
+if (!function_exists('round_to')) {
+    function round_to($x, $number)
+    {
+        return (ceil($number) % $x === 0) ? ceil($number) : round(($number + $x / 2) / $x) * $x;
+    }
+}
