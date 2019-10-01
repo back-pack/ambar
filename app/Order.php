@@ -65,8 +65,13 @@ class Order extends Model
      }
 
     /**
-     * Accessors & Mutators
-     */
+    * Accessors & Mutators
+    */
+
+    public function getProfitAttribute()
+    {
+        return $this->articles->sum('profit');
+    }
 
     public function getDeliveryFormattedAttribute()
     {
