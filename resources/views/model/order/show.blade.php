@@ -46,3 +46,9 @@
     <p>Peso total: {{ number_readable($order->weight, null, "kg") }}</p>
 
 @endsection
+
+@push('js')
+    <script>
+        window.print();
+    </script>
+@endpush
