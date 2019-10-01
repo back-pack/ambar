@@ -28,7 +28,9 @@ class OrderController extends Controller
     {
         $orders = $this->repository->all();
 
-        return view('model.order.index', compact('orders'));
+        $total_profit = $orders->sum('profit');
+
+        return view('model.order.index', compact('orders', 'total_profit'));
     }
 
     /**
