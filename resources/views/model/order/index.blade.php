@@ -35,9 +35,16 @@
             <th scope="col">Entrega</th>
             <th scope="col">Artículos</th>
             <th scope="col">Total</th>
+            <th scope="col">Ganancia</th>
             <th class="config" scope="col"><i class="fas fa-tools config"></i></th>
           </tr>
         </thead>
+        <tfoot class="thead-light">
+            <th colspan="5"></th>
+            <th>{{ number_readable($orders->sum('total'), "$") }}</th>
+            <th>{{ number_readable($orders->sum('profit'), "$") }}</th>
+            <th colspan="1"></th>
+        </tfoot>
         <tbody>
           @foreach ($orders as $order)
             <tr>
@@ -47,6 +54,7 @@
               <td>{{ $order->delivery_formatted }}</td>
               <td>{{ $order->articles()->count() }}</td>
               <td>{{ number_readable($order->total, "$") }}</td>
+              <td>{{ number_readable($order->profit, "$") }}</td>
               <td class='config'><a href="{{ route('orders.edit', ['id' => $order->id]) }}"><button type="button" class="btn btn-sm btn-outline-warning config"><i class="fas fa-wrench"></i></button></a></td>
             </tr>
           @endforeach
