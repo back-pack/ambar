@@ -66,6 +66,8 @@
 </template>
 
 <script>
+import roundTo from '../classes/RoundTo'
+
 export default {
     props: {
         item: Object,
@@ -77,7 +79,8 @@ export default {
         //     return this.item.article.price
         // },
         subtotal() {
-            return (this.item.article.price * this.item.quantity) - (this.item.article.price * this.item.quantity) * (this.item.discount / 100)
+            let subtotal = (this.item.article.price * this.item.quantity) - (this.item.article.price * this.item.quantity) * (this.item.discount / 100)
+            return roundTo(5, subtotal)
         },
         subtotal_formatted() {
             return numeral(this.subtotal).format('$0,0.00')

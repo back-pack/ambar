@@ -39,6 +39,7 @@
 
 <script>
 import Form from '../classes/Form'
+import roundTo from '../classes/RoundTo'
 
 export default {
     props: {
@@ -103,7 +104,7 @@ export default {
             let quantity = 1
             let discount = 0
             let price = article.price
-            let subtotal = price * quantity
+            let subtotal = roundTo(5, price * quantity)
             let is_below_cost = false
 
             this.form.articles.push({

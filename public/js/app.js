@@ -2034,6 +2034,7 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _classes_Form__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../classes/Form */ "./resources/js/classes/Form.js");
+/* harmony import */ var _classes_RoundTo__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../classes/RoundTo */ "./resources/js/classes/RoundTo.js");
 //
 //
 //
@@ -2073,6 +2074,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -2133,7 +2135,7 @@ __webpack_require__.r(__webpack_exports__);
       var quantity = 1;
       var discount = 0;
       var price = article.price;
-      var subtotal = price * quantity;
+      var subtotal = Object(_classes_RoundTo__WEBPACK_IMPORTED_MODULE_1__["default"])(5, price * quantity);
       var is_below_cost = false;
       this.form.articles.push({
         article: article,
@@ -2248,6 +2250,7 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _classes_Form__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../classes/Form */ "./resources/js/classes/Form.js");
+/* harmony import */ var _classes_RoundTo__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../classes/RoundTo */ "./resources/js/classes/RoundTo.js");
 //
 //
 //
@@ -2287,6 +2290,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
@@ -2357,7 +2361,7 @@ __webpack_require__.r(__webpack_exports__);
       var quantity = 1;
       var discount = 0;
       var price = article.price;
-      var subtotal = price * quantity;
+      var subtotal = Object(_classes_RoundTo__WEBPACK_IMPORTED_MODULE_1__["default"])(5, price * quantity);
       var is_below_cost = false;
       this.form.articles.push({
         article: article,
@@ -2436,6 +2440,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _classes_RoundTo__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../classes/RoundTo */ "./resources/js/classes/RoundTo.js");
 //
 //
 //
@@ -2503,6 +2508,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     item: Object,
@@ -2514,7 +2520,8 @@ __webpack_require__.r(__webpack_exports__);
     //     return this.item.article.price
     // },
     subtotal: function subtotal() {
-      return this.item.article.price * this.item.quantity - this.item.article.price * this.item.quantity * (this.item.discount / 100);
+      var subtotal = this.item.article.price * this.item.quantity - this.item.article.price * this.item.quantity * (this.item.discount / 100);
+      return Object(_classes_RoundTo__WEBPACK_IMPORTED_MODULE_0__["default"])(5, subtotal);
     },
     subtotal_formatted: function subtotal_formatted() {
       return numeral(this.subtotal).format('$0,0.00');
@@ -52409,6 +52416,23 @@ function () {
 }();
 
 /* harmony default export */ __webpack_exports__["default"] = (Form);
+
+/***/ }),
+
+/***/ "./resources/js/classes/RoundTo.js":
+/*!*****************************************!*\
+  !*** ./resources/js/classes/RoundTo.js ***!
+  \*****************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+function roundTo(to, number) {
+  return Math.ceil(number) % to === 0 ? Math.ceil(number) : Math.round((number + to / 2) / to) * to;
+}
+
+/* harmony default export */ __webpack_exports__["default"] = (roundTo);
 
 /***/ }),
 
