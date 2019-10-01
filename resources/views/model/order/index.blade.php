@@ -61,6 +61,8 @@
         </tbody>
       </table>
 
+      <h4>Ganancia total: <b>{{ number_readable($total_profit, "$") }}</b></h4>
+
       {{ $orders->appends(request()->input())->links() }}
     </div>
 
