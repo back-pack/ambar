@@ -27,9 +27,11 @@ class Article extends Model
     public function getPriceAttribute()
     {
         $price = (float) $this->cost + $this->margin;
-        $x = 5;
+        // $x = 5;
+        //
+        // return (ceil($price) % $x === 0) ? ceil($price) : round(($price + $x / 2) / $x) * $x;
 
-        return (ceil($price) % $x === 0) ? ceil($price) : round(($price + $x / 2) / $x) * $x;
+        return $price;
     }
 
 }
