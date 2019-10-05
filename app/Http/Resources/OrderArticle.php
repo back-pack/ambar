@@ -22,7 +22,10 @@ class OrderArticle extends JsonResource
             'quantity' => floatval($this->quantity),
             'discount' => floatval($this->discount),
             'subtotal' => $this->subtotal,
-            'is_below_cost' => $this->is_below_cost
+            'is_below_cost' => $this->is_below_cost,
+            'name' => $this->name,//$this->name === null ? $this->article->name : $this->name,
+            'cost' => floatval($this->cost),
+            'weight' => $this->weight,
         ];
     }
 }
