@@ -6,11 +6,13 @@ use Illuminate\Database\Eloquent\Model;
 
 class OrderArticle extends Model
 {
-    protected $fillable = ['order_id', 'article_id', 'price', 'quantity', 'discount', 'is_below_cost'];
+    protected $fillable = ['order_id', 'article_id', 'price', 'quantity', 'discount', 'is_below_cost', 'name', 'cost', 'weight'];
 
     protected $casts = [
         'price' => 'decimal:2',
-        'discount' => 'decimal:2'
+        'discount' => 'decimal:2',
+        'cost' => 'decimal:2',
+        'weight' => 'decimal:2',
     ];
 
     /**
@@ -31,14 +33,14 @@ class OrderArticle extends Model
      * Accessors & Mutators
      */
 
-    public function getNameAttribute()
-    {
-        return $this->article->name;
-    }
+    // public function getNameAttribute()
+    // {
+    //     return $this->name;
+    // }
 
-    public function getWeightAttribute()
+    public function getTotalWeightAttribute()
     {
-        return $this->article->weight * $this->quantity;
+        return $this->weight * $this->quantity;
     }
 
     public function getSubtotalAttribute()
@@ -48,11 +50,11 @@ class OrderArticle extends Model
 
     public function getProfitAttribute()
     {
-        return $this->subtotal - ($this->article->cost * $this->quantity);
+        return $this->subtotal - ($this->cost * $this->quantity);
     }
 
     public function getIsBelowCostAttribute()
     {
-        return $this->subtotal < $this->article->cost * $this->quantity;
+        return $this->subtotal < $this->cost * $this->quantity;
     }
 }
