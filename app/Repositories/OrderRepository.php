@@ -20,14 +20,17 @@ class OrderRepository
         $order = Order::create(\Arr::only($attributes, ['client_id', 'delivery', 'detail', 'total', 'weight']));
 
         foreach ($attributes['articles'] as $order_item) {
-            $article = new \App\OrderArticle([
+            $order_article = new \App\OrderArticle([
                 'article_id' => $order_item['article']['id'],
                 'quantity' => $order_item['quantity'],
                 'discount' => $order_item['discount'],
                 'price' => $order_item['price'],
                 'is_below_cost' => $order_item['is_below_cost'],
+                'name' =>  $order_item['name'],
+                'cost' =>  $order_item['cost'],
+                'weight' =>  $order_item['weight'],
             ]);
-            $order->articles()->save($article);
+            $order->articles()->save($order_article);
         }
 
         return $order;
@@ -65,6 +68,9 @@ class OrderRepository
                 'discount' => $item['discount'],
                 'price' => $item['price'],
                 'is_below_cost' => $item['is_below_cost'],
+                'name' =>  $item['name'],
+                'cost' =>  $item['cost'],
+                'weight' =>  $item['weight'],
             ]);
         }
 
@@ -81,6 +87,9 @@ class OrderRepository
                 'discount' => $item['discount'],
                 'price' => $item['price'],
                 'is_below_cost' => $item['is_below_cost'],
+                'name' =>  $item['name'],
+                'cost' =>  $item['cost'],
+                'weight' =>  $item['weight'],
             ]);
             $order->articles()->save($article);
         }

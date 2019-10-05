@@ -79,17 +79,17 @@ export default {
         //     return this.item.article.price
         // },
         subtotal() {
-            let subtotal = (this.item.article.price * this.item.quantity) - (this.item.article.price * this.item.quantity) * (this.item.discount / 100)
+            let subtotal = (this.item.price * this.item.quantity) - (this.item.price * this.item.quantity) * (this.item.discount / 100)
             return roundTo(5, subtotal)
         },
         subtotal_formatted() {
             return numeral(this.subtotal).format('$0,0.00')
         },
         is_below_cost() {
-            return this.subtotal < this.item.article.cost * this.item.quantity
+            return this.subtotal < this.item.cost * this.item.quantity
         },
         name() {
-            return this.item.article.name
+            return this.item.name
         }
     },
     watch: {

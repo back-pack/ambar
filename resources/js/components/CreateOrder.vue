@@ -92,17 +92,23 @@ export default {
         addItem(article) {
             let quantity = 1
             let discount = 0
-            let price = article.price
-            let subtotal = roundTo(5, price * quantity)
             let is_below_cost = false
+            let name = article.name
+            let cost = article.cost
+            let price = article.price
+            let weight = article.weight
+            let subtotal = roundTo(5, price * quantity)
 
             this.form.articles.push({
                 article,
                 quantity,
                 discount,
-                price,
                 subtotal,
-                is_below_cost
+                is_below_cost,
+                name,
+                cost,
+                price,
+                weight
             })
         },
         updateItem({ index, field, value }) {

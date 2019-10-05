@@ -44,7 +44,7 @@ export default {
             return numeral(this.total).format('$0,0.00')
         },
         weight() {
-            return this.items.reduce((a, b) => a + ((b['article']['weight'] || 0) * (b['quantity'] || 0)), 0)
+            return this.items.reduce((a, b) => a + ((b['weight'] || 0) * (b['quantity'] || 0)), 0)
         },
         items_below_cost() {
             let below_cost = this.items.filter(item => item.is_below_cost)
