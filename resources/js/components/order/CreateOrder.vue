@@ -30,6 +30,13 @@
             <textarea name="detail" class="form-control" rows="5" cols="80" v-model="form.detail"></textarea>
         </div>
 
+        <payment-input
+            v-model="form.payment_amount"
+            :errors="form.errors"
+            :client_debt="client_debt_total"
+            :updating_debt="updating_debt"
+        ></payment-input>
+
         <system-error :error="system_error" @remove-error="clearSystemError"></system-error>
 
         <button type="button" class="btn btn-primary" @click.prevent="submitForm" :disabled="disable_submit">Crear pedido</button>
@@ -38,8 +45,8 @@
 </template>
 
 <script>
-import Form from '../classes/Form'
-import roundTo from '../classes/RoundTo'
+import Form from '../../classes/Form'
+import roundTo from '../../classes/RoundTo'
 
 export default {
     data() {
@@ -54,7 +61,10 @@ export default {
                 detail: "",
                 total: 0.00,
                 weight: 0.00,
+                payment_amount: 0.00
             }),
+            client_debt: 0,
+            updating_debt: false,
             items_below_cost: false,
             system_error: null
         }
@@ -62,6 +72,18 @@ export default {
     created() {
         axios.get('/api/user')
             .then(({data}) => this.user = data.data)
+            .catch(data => {
+                if (!data.errors) {
+                    this.system_error = data
+                }
+            })
+
+        this.updating_debt = true
+        axios.get('/api/clients/'+this.form.client_id)
+            .then(({data}) => {
+                this.client_debt = data.data.debt
+                this.updating_debt = false
+            })
             .catch(data => {
                 if (!data.errors) {
                     this.system_error = data
@@ -77,6 +99,24 @@ export default {
                 return false
             }
             return true
+        },
+        client_debt_total() {
+            return this.client_debt + this.form.total
+        }
+    },
+    watch: {
+        'form.client_id': function () {
+            this.updating_debt = true
+            axios.get('/api/clients/'+this.form.client_id)
+                .then(({data}) => {
+                    this.client_debt = data.data.debt
+                    this.updating_debt = false
+                })
+                .catch(data => {
+                    if (!data.errors) {
+                        this.system_error = data
+                    }
+                })
         }
     },
     methods: {
@@ -125,6 +165,9 @@ export default {
         },
         updateWeight(value) {
             this.form.weight = value
+        },
+        updateClientDebt(value) {
+            this.client_debt = value
         },
         clearSystemError() {
             this.system_error = null

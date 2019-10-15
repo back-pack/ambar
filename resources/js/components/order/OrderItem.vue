@@ -66,7 +66,7 @@
 </template>
 
 <script>
-import roundTo from '../classes/RoundTo'
+import roundTo from '../../classes/RoundTo'
 
 export default {
     props: {

@@ -38,8 +38,8 @@
 </template>
 
 <script>
-import Form from '../classes/Form'
-import roundTo from '../classes/RoundTo'
+import Form from '../../classes/Form'
+import roundTo from '../../classes/RoundTo'
 
 export default {
     props: {
