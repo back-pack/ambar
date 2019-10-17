@@ -10,6 +10,7 @@
     <hr>
     <p>Cliente: {{ $order->client->name }}</p>
     <p>Entrega: {{ $order->deliveryFormatted }}</p>
+    <p>Pagado: {{ number_readable($order->payments->sum('amount'), "$") }} de {{ number_readable($order->total, "$") }}</p>
 
     <table class="table table-hover">
         <thead class="thead-light">
