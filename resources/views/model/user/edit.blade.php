@@ -17,12 +17,12 @@
         'value' => $user->name
       ])
 
-      @input([
+      {{-- @input([
         'name' => 'email',
         'label' => 'Correo electrónico',
         'attributes' => ['type' => 'email', 'readonly' => 'true'],
         'value' => $user->email
-      ])
+      ]) --}}
 
       @input([
         'name' => 'phone',
@@ -31,38 +31,21 @@
         'value' => $user->phone
       ])
 
-      @if ($user->is_admin)
-        @input([
-          'name' => 'is_admin',
-          'label' => '¿Es admin?',
-          'attributes' => ['type' => 'checkbox', 'checked' => 'checked'],
-          'value' => 0
-        ])
-      @else
-        @input([
+        @checkbox_boolean([
           'name' => 'is_admin',
           'label' => '¿Es admin?',
           'attributes' => ['type' => 'checkbox'],
           'value' => $user->is_admin
         ])
-      @endif
-      @if ($user->is_active)
-        @input([
-          'name' => 'is_active',
-          'label' => '¿Activo?',
-          'attributes' => ['type' => 'checkbox', 'checked' => 'checked'],
-          'value' => '1'
-        ])
-      @else
-        @input([
+
+        @checkbox_boolean([
           'name' => 'is_active',
           'label' => '¿Activo?',
           'attributes' => ['type' => 'checkbox'],
-          'value' => '0'
+          'value' => $user->is_active
         ])
-      @endif
-      
-      @input([
+
+      {{-- @input([
         'name' => 'password',
         'label' => 'Contraseña',
         'attributes' => ['type' => 'password', 'readonly' => 'true'],
@@ -74,7 +57,7 @@
         'label' => 'Confirmar contraseña',
         'attributes' => ['type' => 'password', 'readonly' => 'true'],
         'value' => '********'
-      ])
+      ]) --}}
 
       <button type="submit" class="btn btn-primary">Editar</button>
       <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#destroy_user_modal">Eliminar</button>

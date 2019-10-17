@@ -27,20 +27,18 @@
         'attributes' => ['type' => 'text']
       ])
 
-      @input([
+      @checkbox_boolean([
         'name' => 'is_admin',
         'label' => '¿Es admin?',
-        'value' => '1',
         'attributes' => ['type' => 'checkbox']
       ])
 
-      @input([
+      @checkbox_boolean([
         'name' => 'is_active',
         'label' => '¿Activo?',
-        'value' => '1',
-        'attributes' => ['type' => 'checkbox', 'checked' => 'checked']
+        'attributes' => ['type' => 'checkbox']
       ])
-      
+
       @input([
         'name' => 'password',
         'label' => 'Contraseña',
