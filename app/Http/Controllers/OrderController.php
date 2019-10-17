@@ -101,7 +101,29 @@ class OrderController extends Controller
      */
     public function destroy(Order $order)
     {
-        $this->repository->delete($order);
+        if ($order->is_fully_paid) {
+            $this->repository->delete($order);
+        }
+        else {
+            return back()->withMessage('El pedido no se puede eliminar porque no se ha pagado en su totalidad.');
+        }
+
+        return redirect(route('orders.index'));
+    }
+
+    public function deletes()
+    {
+        return view('model.order.destroy-several');
+    }
+
+    public function destroySeveral(Request $request)
+    {
+        $from = $request->get('from_date');
+        $to = $request->get('to_date');
+
+        $orders = Order::whereBetween('created_at', [$from, $to])->get()->filter->is_fully_paid;
+
+        Order::destroy($orders->pluck('id'));
 
         return redirect(route('orders.index'));
     }
