@@ -16,7 +16,7 @@
                     <div class="input-group-prepend">
                         <div class="input-group-text">$</div>
                     </div>
-                    <input class="form-control" type="number" v-model="form.amount" min="0" :max="client.debt">
+                    <input class="form-control" type="number" v-model="form.amount" step="any" min="0" :max="client.debt">
                 </div>
             </div>
 

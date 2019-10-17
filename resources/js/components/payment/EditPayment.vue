@@ -13,10 +13,10 @@
                     <div class="input-group-prepend">
                         <div class="input-group-text">$</div>
                     </div>
-                    <input class="form-control" type="number" v-model="form.amount" min="0" :max="payment.client.debt + payment.amount">
+                    <input class="form-control" type="number" v-model="form.amount" step="any" min="0" :max="payment.client.debt + payment.amount">
                 </div>
             </div>
-            
+
 
             <div class="form-group">
                 <div>El cliente deberá: <b>{{ money_format(payment.client.debt + payment.amount - form.amount) }}</b></div>
@@ -60,7 +60,7 @@ export default {
             .then(({data}) => {
                 this.payment = data.data
                 this.form.client_id = data.data.client.id
-                this.form.amount = parseInt(data.data.amount)
+                this.form.amount = parseFloat(data.data.amount)
             })
             .catch(data => {
                 if (!data.errors) {
