@@ -76,7 +76,7 @@ export default {
                 is_admin: false
             },
             form: new Form({
-                client_id: 1,
+                client_id: 5,
                 delivery: null,
                 articles: [],
                 detail: "",
@@ -100,10 +100,21 @@ export default {
             })
 
         this.updating_debt = true
-        axios.get('/api/clients/'+this.form.client_id)
+        axios.get('/api/clients')
             .then(({data}) => {
-                this.client_debt = data.data.debt
-                this.updating_debt = false
+                let clients = data.data
+                this.form.client_id = clients[0].id
+
+                axios.get('/api/clients/'+this.form.client_id)
+                    .then(({data}) => {
+                        this.client_debt = data.data.debt
+                        this.updating_debt = false
+                    })
+                    .catch(data => {
+                        if (!data.errors) {
+                            this.system_error = data
+                        }
+                    })
             })
             .catch(data => {
                 if (!data.errors) {

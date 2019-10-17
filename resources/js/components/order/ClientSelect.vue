@@ -26,6 +26,7 @@ export default {
         axios.get('/api/clients')
             .then(({data}) => {
                 this.clients = data.data
+                this.updateValue(this.clients[0].id)
             })
             .finally(() => this.loading = false)
     },
