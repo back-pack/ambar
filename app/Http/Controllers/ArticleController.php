@@ -25,8 +25,13 @@ class ArticleController extends Controller
      */
     public function index()
     {
-        $articles = $this->repository->all();
-        return view('model.article.index', compact('articles'));
+        $articles = $this->repository->all()->paginate(config('pagination.model.article'));
+
+        $categories = \App\Category::all()->map->toSelectOption();
+
+        $categories->prepend(['', 'Todos']);
+
+        return view('model.article.index', compact('articles', 'categories'));
     }
 
     public function pdf(Request $request)
@@ -41,7 +46,8 @@ class ArticleController extends Controller
      */
     public function create()
     {
-        return view('model.article.create');
+        $categories = \App\Category::all()->map->toSelectOption();
+        return view('model.article.create', compact('categories'));
     }
 
     /**
@@ -76,7 +82,8 @@ class ArticleController extends Controller
      */
     public function edit(Article $article)
     {
-        return view('model.article.edit', compact('article'));
+        $categories = \App\Category::all()->map->toSelectOption();
+        return view('model.article.edit', compact('article', 'categories'));
     }
 
     /**
