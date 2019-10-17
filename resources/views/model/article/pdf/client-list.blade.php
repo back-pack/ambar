@@ -1,14 +1,8 @@
 @extends('layouts.pdf')
 
 @section('content')
-
-    <div class="row">
-        <div class="col-12 clearfix">
-            <h4 class="float-left">Ambar</h4>
-            <h4 class="float-right">Lista de artículos {{ $date }}</h4>
-        </div>
-    </div>
-
+    {{-- <h6 class="text-center">Lista de artículos {{ $date }}</h6> --}}
+    <img src="{{ public_path('/img/articles_list_client_pdf_header.png') }}" style="width: 100%" alt="">
 
     @foreach ($categories as $category)
         <table class="table table-bordered table-sm">
