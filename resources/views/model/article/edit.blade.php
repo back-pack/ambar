@@ -13,6 +13,13 @@
       @csrf
       @method('patch')
 
+      @select([
+          'name' => 'category_id',
+          'label' => 'Categoria',
+          'options' => $categories,
+          'value' => $article->category->id
+      ])
+
       <div class="form-row">
 
         <div class="col-md-3">
@@ -36,11 +43,11 @@
 
         <div class="col-md-3">
           @input([
-            'name' => 'margin',
-            'label' => 'Margen',
+            'name' => 'price',
+            'label' => 'Precio',
             'input_group_prepend_text' => ['$'],
             'attributes' => ['type' => 'number', 'step' => 'any'],
-            'value' => $article->margin
+            'value' => $article->price
           ])
         </div>
 
