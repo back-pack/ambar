@@ -20,8 +20,6 @@ class CreateOrdersTable extends Migration
             $table->text('detail')->nullable();
             $table->decimal('total', 8, 2);
             $table->decimal('weight', 8, 2);
-            // $table->bigInteger('created_by');
-            // $table->bigInteger('updated_by');
             $table->timestamps();
         });
     }
