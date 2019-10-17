@@ -43,4 +43,16 @@ class OrderRequest extends FormRequest
             'delivery.after' => 'El campo entrega debe ser una fecha desde hoy en adelante.'
         ];
     }
+
+    public function withValidator($validator)
+    {
+        $validator->after(function ($validator) {
+            $client = \App\Client::findOrFail($this->client_id);
+
+            if ($this->payment_amount > $client->debt)
+            {
+                $validator->errors()->add('payment_amount', 'El monto del pago excede a la deuda del cliente.');
+            }
+        });
+    }
 }
