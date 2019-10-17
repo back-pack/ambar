@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Pipeline\Pipeline;
 
@@ -16,6 +17,15 @@ class Order extends Model
         'weight' => 'decimal:2'
     ];
 
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::addGlobalScope('orderedByCreatedAt', function (Builder $builder) {
+            $builder->orderBy('created_at', 'desc');
+        });
+    }
+
     /**
      * Relationships
      */
@@ -28,6 +38,11 @@ class Order extends Model
     public function articles()
     {
         return $this->hasMany('App\OrderArticle');
+    }
+
+    public function payments()
+    {
+        return $this->hasMany('App\Payment');
     }
 
     /**
@@ -67,6 +82,21 @@ class Order extends Model
     /**
     * Accessors & Mutators
     */
+
+    public function getIsFullyPaidAttribute()
+    {
+        return $this->total == $this->payments->sum('amount');
+    }
+
+    public function getHasDebtAttribute()
+    {
+        return $this->total != $this->payments->sum('amount');
+    }
+
+    public function getDebtAttribute()
+    {
+        return $this->total - $this->payments->sum('amount');
+    }
 
     public function getProfitAttribute()
     {
