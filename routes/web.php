@@ -16,9 +16,13 @@ Route::get('/', function () {
 });
 
 Route::get('articles/pdf', 'ArticleController@pdf')->name('articles.pdf');
+Route::post('orders/destroy-several', 'OrderController@destroySeveral')->name('orders.destroy-several');
+Route::get('orders/deletes', 'OrderController@deletes')->name('orders.deletes');
 
 Route::resource('clients', 'ClientController');
 Route::resource('orders', 'OrderController');
+Route::resource('payments', 'PaymentController');
+Route::resource('categories', 'CategoryController');
 Route::resource('articles', 'ArticleController');
 Route::resource('users', 'UserController');
 
