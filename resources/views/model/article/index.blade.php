@@ -15,14 +15,28 @@
           <button onclick="hide()" class="btn btn-sm btn-outline-primary" type="button"><i class="fas fa-tools"></i></button>
       </p>
       <articles-search></articles-search>
+      <form method="get" action="{{ route('articles.index') }}">
+          <div class="form-row">
+              @select([
+                  'name' => 'category',
+                  'options' => $categories,
+                  'value' => request()->query('category'),
+                  'classes' => ['select' => 'mb-2 mr-2', 'wrapper' => 'col']
+              ])
+              <div class="form-group col-auto">
+                  <button type="submit" class="btn btn-primary">Filtrar</button>
+              </div>
+          </div>
+      </form>
       <table class="table table-hover table-responsive-sm">
         <thead class="thead-light">
           <tr>
             <th scope="col">ID</th>
             <th scope="col">Nombre</th>
+            <th scope="col">Categoria</th>
             <th scope="col">Descripción</th>
             <th scope="col">Costo</th>
-            <th scope="col">Margen</th>
+            {{-- <th scope="col">Margen</th> --}}
             <th scope="col">Precio</th>
             <th class="config" scope="col"><i class="fas fa-tools config"></i></th>
           </tr>
@@ -32,9 +46,10 @@
             <tr>
               <td scope="row">{{ $article->id }}</td>
               <td>{{ $article->name }}</td>
+              <td>{{ $article->category->name }}</td>
               <td>{{ $article->description }}</td>
               <td>{{ number_readable($article->cost, "$") }}</td>
-              <td>{{ number_readable($article->margin, "$") }}</td>
+              {{-- <td>{{ number_readable($article->margin, "$") }}</td> --}}
               <td>{{ number_readable($article->price, "$") }}</td>
               <td class='config'><a href="{{ route('articles.edit', ['id' => $article->id]) }}"><button type="button" class="btn btn-sm btn-outline-warning config"><i class="fas fa-wrench"></i></button></a></td>
             </tr>
