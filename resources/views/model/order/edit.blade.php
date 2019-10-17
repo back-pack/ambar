@@ -6,9 +6,15 @@
 
 @section('content')
 
+    @include('components.message')
+
     <edit-order order_id="{{ $order->id }}"></edit-order>
 
     <hr>
+
+    {{-- <div>Total: {{ $order->total }}</div>
+    <div>Pagado: {{ $order->payments->sum('amount') }}</div>
+    <div>Pagado en su totalidad: {{ $order->is_fully_paid ? 'Si' : 'No' }}</div> --}}
 
     <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#destroy_order_modal">Eliminar</button>
 
