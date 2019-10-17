@@ -33,7 +33,7 @@
             @foreach ($order->articles as $article)
                 <tr @if ($article->is_below_cost) class="table-warning" @endif>
                     <td>{{ $article->name }}</td>
-                    <td>{{ number_readable($article->price, "$") }}</td>
+                    <td>{{ number_readable($article->touched_price, "$") }}</td>
                     <td>{{ $article->quantity }}</td>
                     <td>{{ number_readable($article->discount, null, "%", true) }}</td>
                     <td>{{ number_readable($article->subtotal, "$") }}</td>
