@@ -25,7 +25,7 @@ class ClientRequest extends FormRequest
     {
         return [
             'name'      => ['required', 'max:30'],
-            'email'     => ['required', 'email']
+            'email'     => ['nullable', 'email']
         ];
     }
 }
