@@ -24,10 +24,11 @@ class ArticleRequest extends FormRequest
     public function rules()
     {
         return [
+            'category_id'   => ['required', 'numeric', 'exists:categories,id'],
             'name'          => ['required', 'string'],
             'description'   => ['present'],
             'cost'          => ['required', 'numeric'],
-            'margin'        => ['required', 'numeric'],
+            'price'        => ['required', 'numeric'],
             'weight'        => ['required', 'numeric']
         ];
     }
