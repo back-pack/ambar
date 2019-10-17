@@ -30,6 +30,7 @@ class OrderRequest extends FormRequest
             'articles.*.article.id' => ['required', 'integer', 'exists:articles,id'],
             'articles.*.quantity' => ['required', 'numeric', 'min:1'],
             'articles.*.discount' => ['required', 'numeric', 'min:0'],
+            'articles.*.touched_price' => ['required', 'numeric', 'min:0'],
             'detail' => ['nullable', 'string'],
             'total' => ['required', 'numeric'],
             'weight' => ['required', 'numeric'],
