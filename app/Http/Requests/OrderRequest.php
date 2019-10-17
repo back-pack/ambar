@@ -32,7 +32,8 @@ class OrderRequest extends FormRequest
             'articles.*.discount' => ['required', 'numeric', 'min:0'],
             'detail' => ['nullable', 'string'],
             'total' => ['required', 'numeric'],
-            'weight' => ['required', 'numeric']
+            'weight' => ['required', 'numeric'],
+            'payment_amount' => ['nullable', 'numeric', 'min:0']
         ];
     }
 
