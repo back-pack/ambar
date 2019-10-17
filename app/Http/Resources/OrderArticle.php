@@ -20,7 +20,7 @@ class OrderArticle extends JsonResource
             'article' => new ArticleResource($this->article),
             'price' => floatval($this->price),
             'quantity' => floatval($this->quantity),
-            'discount' => floatval($this->discount),
+            'touched_price' => floatval($this->touched_price),
             'subtotal' => $this->subtotal,
             'is_below_cost' => $this->is_below_cost,
             'name' => $this->name === "Sin nombre" ? $this->article->name : $this->name,
