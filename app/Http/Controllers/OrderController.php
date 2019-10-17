@@ -118,8 +118,13 @@ class OrderController extends Controller
 
     public function destroySeveral(Request $request)
     {
-        $from = $request->get('from_date');
-        $to = $request->get('to_date');
+        $validated = $request->validate([
+            'from_date' => ['required', 'date'],
+            'to_date' => ['required', 'date']
+        ]);
+
+        $from = $validated['from_date'];
+        $to = $validated['to_date'];
 
         $orders = Order::whereBetween('created_at', [$from, $to])->get()->filter->is_fully_paid;
 
