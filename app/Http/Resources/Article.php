@@ -19,7 +19,7 @@ class Article extends JsonResource
             'name' => $this->name,
             'cost' => (float) $this->cost,
             'price' => (float) $this->price,
-            'margin' => (float) $this->margin,
+            // 'margin' => (float) $this->margin,
             'weight' => (float) $this->weight
         ];
     }
