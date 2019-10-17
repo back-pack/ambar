@@ -8,14 +8,18 @@
 
         <div class="collapse navbar-collapse" id="top-navbar-menu">
             <ul class="navbar-nav mr-auto">
-                @nav_item(['href' => route('orders.index'), 'url' => 'orders', 'text' => 'Pedidos'])
+                @nav_item(['href' => route('orders.index', ['delivery' => 1, 'created_at' => now()->format('Y-m-d')]), 'url' => 'orders', 'text' => 'Pedidos'])
+                @nav_item(['href' => route('orders.create'), 'url' => 'orders/create', 'text' => 'Ingresar pedido'])
                 @nav_item(['href' => route('articles.index'), 'url' => 'articles', 'text' => 'Artículos'])
+                @nav_item(['href' => route('categories.index'), 'url' => 'categories', 'text' => 'Categorias'])
 
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Admin</a>
                     <div class="dropdown-menu" aria-labelledby="dropdown01">
                     @nav_dropdown_item(['href' => route('clients.index'), 'url' => 'clients', 'text' => 'Clientes'])
+                    @nav_dropdown_item(['href' => route('payments.index'), 'url' => 'payments', 'text' => 'Pagos'])
                     @nav_dropdown_item(['href' => route('users.index'), 'url' => 'users', 'text' => 'Usuarios'])
+                    @nav_dropdown_item(['href' => route('orders.deletes'), 'url' => 'orders', 'text' => 'Eliminar pedidos'])
                     </div>
                 </li>
 
