@@ -9,25 +9,24 @@
         </div>
     </div>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Nombre</th>
-                <th>Descripción</th>
-                <th>Precio</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach ($articles as $article)
+
+    @foreach ($categories as $category)
+        <table class="table table-bordered table-sm">
+            <thead class="thead-light">
                 <tr>
-                    <td>#{{ $article->id }}</td>
-                    <td>{{ $article->name }}</td>
-                    <td>{{ $article->description }}</td>
-                    <td>{{ number_readable($article->price, "$") }}</td>
+                    <th style="font-size: 10pt">{{ $category->name }}</th>
+                    <th style="font-size: 10pt">Precio</th>
                 </tr>
-            @endforeach
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                @foreach ($category->articles as $article)
+                    <tr>
+                        <td style="font-size: 10pt">{{ $article->name }}</td>
+                        <td style="font-size: 10pt">{{ number_readable($article->price, "$") }}</td>
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
+    @endforeach
 
 @endsection
