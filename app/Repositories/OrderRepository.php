@@ -25,12 +25,64 @@ class OrderRepository
                 'quantity' => $order_item['quantity'],
                 'discount' => $order_item['discount'],
                 'price' => $order_item['price'],
+                'touched_price' => $order_item['touched_price'],
                 'is_below_cost' => $order_item['is_below_cost'],
                 'name' =>  $order_item['name'],
                 'cost' =>  $order_item['cost'],
                 'weight' =>  $order_item['weight'],
             ]);
             $order->articles()->save($order_article);
+        }
+
+        $payment_amount = $attributes['payment_amount'];
+
+        if ($payment_amount > 0) {
+
+            if ($payment_amount <= $order->total) {
+                \App\Payment::create([
+                    'client_id' => $attributes['client_id'],
+                    'order_id' => $order->id,
+                    'amount' => $payment_amount
+                ]);
+            }
+            else {
+
+                \App\Payment::create([
+                    'client_id' => $attributes['client_id'],
+                    'order_id' => $order->id,
+                    'amount' => $order->total
+                ]);
+
+                $payment_amount -= $order->total;
+
+                $client = \App\Client::find($attributes['client_id']);
+
+                $orders_with_debt = $client->orders->filter->has_debt;
+
+                $i = 0;
+
+                while ($payment_amount != 0) {
+                    $order_with_debt = $orders_with_debt[$i];
+
+                    if ($payment_amount <= $order_with_debt->debt) {
+                        $amount = $payment_amount;
+                    }
+                    else {
+                        $amount = $order_with_debt->debt;
+                    }
+
+                    \App\Payment::create([
+                        'client_id' => $attributes['client_id'],
+                        'order_id' => $order_with_debt->id,
+                        'amount' => $amount
+                    ]);
+
+                    $payment_amount -= $amount;
+                    $i++;
+                }
+
+            }
+
         }
 
         return $order;
@@ -67,6 +119,7 @@ class OrderRepository
                 'quantity' => $item['quantity'],
                 'discount' => $item['discount'],
                 'price' => $item['price'],
+                'touched_price' => $item['touched_price'],
                 'is_below_cost' => $item['is_below_cost'],
                 'name' =>  $item['name'],
                 'cost' =>  $item['cost'],
@@ -86,6 +139,7 @@ class OrderRepository
                 'quantity' => $item['quantity'],
                 'discount' => $item['discount'],
                 'price' => $item['price'],
+                'touched_price' => $item['touched_price'],
                 'is_below_cost' => $item['is_below_cost'],
                 'name' =>  $item['name'],
                 'cost' =>  $item['cost'],
