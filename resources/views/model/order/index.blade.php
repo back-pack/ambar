@@ -8,7 +8,12 @@
 
 
     <div class="col-sm">
-      <p class='h2'>Pedidos | <a href="{{ route('orders.create') }}" ><button class="btn btn-sm btn-outline-success" type="button"><i class="fas fa-plus-square"></i></button></a> <button onclick="window.print()" class="btn btn-sm btn-outline-secondary" type="button"><i class="fas fa-print"></i></button> <button onclick="hide()" class="btn btn-sm btn-outline-primary" type="button"><i class="fas fa-tools"></i></button></p>
+      <p class='h2'>Pedidos |
+          <a href="{{ route('orders.create') }}" ><button class="btn btn-sm btn-outline-success" type="button"><i class="fas fa-plus-square"></i></button></a>
+          <button onclick="window.print()" class="btn btn-sm btn-outline-secondary" type="button"><i class="fas fa-print"></i></button>
+          <button onclick="hide()" class="btn btn-sm btn-outline-primary" type="button"><i class="fas fa-tools"></i></button>
+          <button onclick="hideProfit()" class="btn btn-sm btn-outline-primary" type="button"><i class="fas fa-money-bill-wave"></i></button>
+      </p>
         <form method="get" action="{{ route('orders.index') }}" class="form-inline d-print-none">
             @select([
                 'name' => 'delivery',
@@ -35,14 +40,20 @@
             <th scope="col">Entrega</th>
             <th scope="col">Artículos</th>
             <th scope="col">Total</th>
-            <th scope="col">Ganancia</th>
+            <th scope="col">Pagado</th>
+            @if (auth()->user()->is_admin)
+                <th class="profit collapse" scope="col">Ganancia</th>
+            @endif
             <th class="config" scope="col"><i class="fas fa-tools config"></i></th>
           </tr>
         </thead>
         <tfoot class="thead-light">
             <th colspan="5"></th>
             <th>{{ number_readable($orders->sum('total'), "$") }}</th>
-            <th>{{ number_readable($orders->sum('profit'), "$") }}</th>
+            <th class="config" colspan="1"></th>
+            @if (auth()->user()->is_admin)
+                <th class="profit collapse">{{ number_readable($orders->sum('profit'), "$") }}</th>
+            @endif
             <th colspan="1"></th>
         </tfoot>
         <tbody>
@@ -54,14 +65,19 @@
               <td>{{ $order->delivery_formatted }}</td>
               <td>{{ $order->articles()->count() }}</td>
               <td>{{ number_readable($order->total, "$") }}</td>
-              <td>{{ number_readable($order->profit, "$") }}</td>
+              <td>{{ number_readable($order->payments->sum('amount'), "$") }}</td>
+              @if (auth()->user()->is_admin)
+                  <td class="profit collapse">{{ number_readable($order->profit, "$") }}</td>
+              @endif
               <td class='config'><a href="{{ route('orders.edit', ['id' => $order->id]) }}"><button type="button" class="btn btn-sm btn-outline-warning config"><i class="fas fa-wrench"></i></button></a></td>
             </tr>
           @endforeach
         </tbody>
       </table>
 
-      <h4>Ganancia total: <b>{{ number_readable($total_profit, "$") }}</b></h4>
+    @if (auth()->user()->is_admin)
+        <h4 class="profit collapse">Ganancia total: <b>{{ number_readable($total_profit, "$") }}</b></h4>
+    @endif
 
       {{ $orders->appends(request()->input())->links() }}
     </div>
