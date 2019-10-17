@@ -24,6 +24,7 @@
                         min="0"
                         :max="client_debt"
                     >
+                    <span class="invalid-feedback" v-text="errors.get('payment_amount')"></span>
                 </div>
             </div>
 
