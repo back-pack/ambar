@@ -1,47 +1,68 @@
 <template>
-    <form @input="form.errors.clear($event.target.name)">
-
-        <client-select
-            v-model="form.client_id"
-        ></client-select>
-
-        <delivery-switch
-            v-model="form.delivery"
-            :errors="form.errors"
-        ></delivery-switch>
-
-        <article-search-input
-            @add-item="addItem"
-            :errors="form.errors"
-        ></article-search-input>
-
-        <order-item-list
-            :items="form.articles"
-            :errors="form.errors"
-            @update-item="updateItem"
-            @remove-item="removeItem"
-            @update-total="updateTotal"
-            @update-weight="updateWeight"
-            @update-items-below-cost="updateItemsBelowCost"
-        ></order-item-list>
-
-        <div class="form-group">
-            <label for="">Detalle</label>
-            <textarea name="detail" class="form-control" rows="5" cols="80" v-model="form.detail"></textarea>
+    <div>
+        <div class="modal" tabindex="-1" role="dialog" id="myModal">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Pedido sin pago</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <p>El pedido no tiene ningun pago. ¿Desea continuar?</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+            <button type="button" class="btn btn-primary" data-dismiss="modal" @click="submitForm">Si</button>
+          </div>
         </div>
+      </div>
+    </div>
+        <form @input="form.errors.clear($event.target.name)">
 
-        <payment-input
-            v-model="form.payment_amount"
-            :errors="form.errors"
-            :client_debt="client_debt_total"
-            :updating_debt="updating_debt"
-        ></payment-input>
+            <client-select
+                v-model="form.client_id"
+            ></client-select>
 
-        <system-error :error="system_error" @remove-error="clearSystemError"></system-error>
+            <delivery-switch
+                v-model="form.delivery"
+                :errors="form.errors"
+            ></delivery-switch>
 
-        <button type="button" class="btn btn-primary" @click.prevent="submitForm" :disabled="disable_submit">Crear pedido</button>
+            <article-search-input
+                @add-item="addItem"
+                :errors="form.errors"
+            ></article-search-input>
 
-    </form>
+            <order-item-list
+                :items="form.articles"
+                :errors="form.errors"
+                @update-item="updateItem"
+                @remove-item="removeItem"
+                @update-total="updateTotal"
+                @update-weight="updateWeight"
+                @update-items-below-cost="updateItemsBelowCost"
+            ></order-item-list>
+
+            <div class="form-group">
+                <label for="">Detalle</label>
+                <textarea name="detail" class="form-control" rows="5" cols="80" v-model="form.detail"></textarea>
+            </div>
+
+            <payment-input
+                v-model="form.payment_amount"
+                :errors="form.errors"
+                :client_debt="client_debt_total"
+                :updating_debt="updating_debt"
+            ></payment-input>
+
+            <system-error :error="system_error" @remove-error="clearSystemError"></system-error>
+
+            <button type="button" class="btn btn-primary" @click.prevent="attempt_submit" :disabled="disable_submit">Crear pedido</button>
+
+        </form>
+    </div>
 </template>
 
 <script>
@@ -66,7 +87,7 @@ export default {
             client_debt: 0,
             updating_debt: false,
             items_below_cost: false,
-            system_error: null
+            system_error: null,
         }
     },
     created() {
@@ -120,6 +141,14 @@ export default {
         }
     },
     methods: {
+        attempt_submit()
+        {
+            if (this.form.payment_amount == 0.00) {
+                $('#myModal').modal('toggle')
+            } else {
+                this.submitForm();
+            }
+        },
         submitForm() {
             this.form.submit('post', '/orders')
                 .then(data => window.location.href = "/orders/"+data)
@@ -131,17 +160,19 @@ export default {
         },
         addItem(article) {
             let quantity = 1
+            let touched_price = article.price
             let discount = 0
             let is_below_cost = false
             let name = article.name
             let cost = article.cost
             let price = article.price
             let weight = article.weight
-            let subtotal = roundTo(5, price * quantity)
+            let subtotal = price * quantity
 
             this.form.articles.push({
                 article,
                 quantity,
+                touched_price,
                 discount,
                 subtotal,
                 is_below_cost,

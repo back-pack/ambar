@@ -102,17 +102,19 @@ export default {
         },
         addItem(article) {
             let quantity = 1
+            let touched_price = article.price
             let discount = 0
             let is_below_cost = false
             let name = article.name
             let cost = article.cost
             let price = article.price
             let weight = article.weight
-            let subtotal = roundTo(5, price * quantity)
+            let subtotal = price * quantity
 
             this.form.articles.push({
                 article,
                 quantity,
+                touched_price,
                 discount,
                 subtotal,
                 is_below_cost,

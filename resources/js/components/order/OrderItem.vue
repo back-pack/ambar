@@ -35,21 +35,23 @@
 
                     <div class="input-group">
                       <div class="input-group-prepend">
-                        <span class="input-group-text">Desc</span>
+                        <span class="input-group-text">Precio</span>
                       </div>
                       <input
                           type="number"
                           min="0"
-                          :class="errors.has('articles.'+index+'.discount') ? 'form-control is-invalid' : 'form-control'"
-                          :value="item.discount"
-                          @input="updateDiscount"
+                          step="any"
+                          :class="errors.has('articles.'+index+'.touched_price') ? 'form-control is-invalid' : 'form-control'"
+                          :value="item.touched_price"
+                          @input="updateTouchedPrice"
                         >
-                      <span class="invalid-feedback" v-text="errors.get('articles.'+index+'.discount')"></span>
+                      <span class="invalid-feedback" v-text="errors.get('articles.'+index+'.touched_price')"></span>
                     </div>
 
                   </div>
                   <div class="col-lg col-12 mt-2 mt-lg-0">
                       <div class="py-2 float-right">Subtotal: <b>{{ subtotal_formatted }}</b></div>
+                      <div class="py-2 pr-2 float-right">Descuento: <b>{{ discount }}%</b></div>
                   </div>
 
               </div>
@@ -78,9 +80,13 @@ export default {
         // price() {
         //     return this.item.article.price
         // },
+        discount() {
+            return parseInt(100 - (this.item.touched_price * 100) / this.item.price)
+        },
         subtotal() {
-            let subtotal = (this.item.price * this.item.quantity) - (this.item.price * this.item.quantity) * (this.item.discount / 100)
-            return roundTo(5, subtotal)
+            // let subtotal = (this.item.price * this.item.quantity) - (this.item.price * this.item.quantity) * (this.item.discount / 100)
+            // return roundTo(5, subtotal)
+            return this.item.touched_price * this.item.quantity
         },
         subtotal_formatted() {
             return numeral(this.subtotal).format('$0,0.00')
@@ -96,6 +102,9 @@ export default {
         // price(value) {
         //     this.$emit('update-item', {index: this.index, field: 'price', value: value})
         // },
+        discount(value) {
+            this.$emit('update-item', {index: this.index, field: 'discount', value: value})
+        },
         subtotal(value) {
             this.$emit('update-item', {index: this.index, field: 'subtotal', value: value})
         },
@@ -108,10 +117,14 @@ export default {
             let value = parseInt(event.target.value)
             this.$emit('update-item', {index: this.index, field: 'quantity', value: value})
         },
-        updateDiscount(event) {
-            let value = parseInt(event.target.value)
-            this.$emit('update-item', {index: this.index, field: 'discount', value: value})
-        }
+        updateTouchedPrice(event) {
+            let value = event.target.value
+            this.$emit('update-item', {index: this.index, field: 'touched_price', value: value})
+        },
+        // updateDiscount(event) {
+        //     let value = parseInt(event.target.value)
+        //     this.$emit('update-item', {index: this.index, field: 'discount', value: value})
+        // }
     }
 }
 </script>
