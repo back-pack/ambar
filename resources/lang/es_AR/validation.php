@@ -153,6 +153,9 @@ return [
         'articles'      => 'artículos',
         'articles.*.quantity' => 'cantidad',
         'articles.*.discount' => 'descuento',
+        'articles.*.touched_price' => 'precio',
+        'from_date' => 'desde fecha',
+        'to_date' => 'hasta fecha'
     ],
 
 ];
