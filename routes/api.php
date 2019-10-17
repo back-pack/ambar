@@ -4,10 +4,12 @@ use Illuminate\Http\Request;
 use App\Article;
 use App\Client;
 use App\Order;
+use App\Payment;
 use App\Http\Resources\Article as ArticleResource;
 use App\Http\Resources\Client as ClientResource;
 use App\Http\Resources\Order as OrderResource;
 use App\Http\Resources\User as UserResource;
+use App\Http\Resources\PaymentResource;
 
 /*
 |--------------------------------------------------------------------------
@@ -33,7 +35,7 @@ Route::middleware(['auth:api'])->group(function () {
     Route::get('articles', function (Request $request) {
 
         if ($request->query('search')) {
-            $articles = Article::where('name', 'like', $request->query('search').'%')->take(10)->get();
+            $articles = Article::where('name', 'like', $request->query('search').'%')->take(15)->get();
         } else {
             $articles = Article::all();
         }
@@ -57,6 +59,10 @@ Route::middleware(['auth:api'])->group(function () {
 
     Route::get('clients/{client}', function (Client $client) {
         return new ClientResource($client);
+    });
+
+    Route::get('payments/{payment}', function (Payment $payment) {
+        return new PaymentResource($payment);
     });
 
 });
