@@ -9,24 +9,17 @@ class UserRepository
 {
     public function create($request): User
     {
-        $userData = $request->all();
-        array_key_exists('is_admin', $userData) ? $userData['is_admin'] = true : $userData['is_admin'] = false;
-        array_key_exists('is_active', $userData) ? $userData['is_active'] = true : $userData['is_active'] = false;
+        $userData = $request->validated();
 
         $userData['password'] = Hash::make($userData['password']);
         $userData['api_token'] = \Str::random(60);
+        
         return User::create($userData);
     }
 
     public function update($request, $id): User
     {
-        $userData = $request->all();
-        array_key_exists('is_admin', $userData) ? $userData['is_admin'] = true : $userData['is_admin'] = false;
-        array_key_exists('is_active', $userData) ? $userData['is_active'] = true : $userData['is_active'] = false;
-
-        if($userData['password'] != '********') {
-            $userData['password'] = Hash::make($userData['password']);
-        }
+        $userData = $request->validated();
 
         $user = User::find($id);
         $user->update($userData);
