@@ -6,12 +6,13 @@ use Illuminate\Database\Eloquent\Model;
 
 class OrderArticle extends Model
 {
-    protected $fillable = ['order_id', 'article_id', 'price', 'quantity', 'discount', 'is_below_cost', 'name', 'cost', 'weight'];
+    protected $fillable = ['order_id', 'article_id', 'price', 'quantity', 'discount', 'is_below_cost', 'name', 'cost', 'touched_price', 'weight'];
 
     protected $casts = [
         'price' => 'decimal:2',
         'discount' => 'decimal:2',
         'cost' => 'decimal:2',
+        'touched_price' => 'decimal:2',
         'weight' => 'decimal:2',
     ];
 
@@ -45,7 +46,7 @@ class OrderArticle extends Model
 
     public function getSubtotalAttribute()
     {
-        return round_to(5, ($this->price * $this->quantity) - (($this->discount * ($this->price * $this->quantity)) / 100));
+        return ($this->price * $this->quantity) - (($this->discount * ($this->price * $this->quantity)) / 100);
     }
 
     public function getProfitAttribute()
