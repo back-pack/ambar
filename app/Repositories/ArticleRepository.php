@@ -9,7 +9,7 @@ class ArticleRepository
 {
     public function all()
     {
-        return Article::paginate(config('pagination.model.article'));
+        return Article::filtered();
     }
 
     public function create(ArticleRequest $request): Article
@@ -17,7 +17,7 @@ class ArticleRepository
         $attributes = $request->validated();
 
         $attributes['cost_last_update'] = now();
-        $attributes['margin_last_update'] = now();
+        $attributes['price_last_update'] = now();
 
         return Article::create($attributes);
     }
@@ -30,8 +30,8 @@ class ArticleRepository
             $attributes['cost_last_update'] = now();
         }
 
-        if ($request->input('margin') !== $article->margin) {
-            $attributes['margin_last_update'] = now();
+        if ($request->input('price') !== $article->price) {
+            $attributes['price_last_update'] = now();
         }
 
         $article->update($attributes);
@@ -46,6 +46,7 @@ class ArticleRepository
 
     public function pdf($type)
     {
+        $categories = \App\Category::all();
         $articles = Article::all();
         $date = now()->format('d-m-Y');
         $filename = 'articulos_'.$date.'_'.$type.'.pdf';
@@ -53,7 +54,7 @@ class ArticleRepository
         $toDownload = "pdf/{$filename}";
 
         if ($type == 'client') {
-            $pdf = \PDF::loadView('model.article.pdf.client-list', compact('articles', 'date'));
+            $pdf = \PDF::loadView('model.article.pdf.client-list', compact('categories', 'date'));
         }
         else {
             $pdf = \PDF::loadView('model.article.pdf.list', compact('articles', 'date'));
