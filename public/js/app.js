@@ -2660,90 +2660,9 @@ __webpack_require__.r(__webpack_exports__);
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/order/OrderItemList.vue?vue&type=script&lang=js& ***!
   \******************************************************************************************************************************************************************************/
 /*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports) {
 
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var numeral__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! numeral */ "./node_modules/numeral/numeral.js");
-/* harmony import */ var numeral__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(numeral__WEBPACK_IMPORTED_MODULE_0__);
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-  props: {
-    items: Array,
-    errors: Object
-  },
-  computed: {
-    total: function total() {
-      return this.items.reduce(function (a, b) {
-        return a + (b['subtotal'] || 0);
-      }, 0);
-    },
-    total_formatted: function total_formatted() {
-      return numeral__WEBPACK_IMPORTED_MODULE_0___default()(this.total).format('$0,0.00');
-    },
-    weight: function weight() {
-      return this.items.reduce(function (a, b) {
-        return a + (b['weight'] || 0) * (b['quantity'] || 0);
-      }, 0);
-    },
-    items_below_cost: function items_below_cost() {
-      var below_cost = this.items.filter(function (item) {
-        return item.is_below_cost;
-      });
-      return below_cost.length > 0;
-    }
-  },
-  watch: {
-    total: function total(value) {
-      this.$emit('update-total', value);
-      this.$emit('update-payment-amount', value);
-    },
-    weight: function weight(value) {
-      this.$emit('update-weight', value);
-    },
-    items_below_cost: function items_below_cost(value) {
-      this.$emit('update-items-below-cost', value);
-    }
-  },
-  methods: {
-    updateItem: function updateItem(value) {
-      this.$emit('update-item', value);
-    },
-    removeItem: function removeItem(value) {
-      this.$emit('remove-item', value);
-    }
-  }
-});
+throw new Error("Module build failed (from ./node_modules/babel-loader/lib/index.js):\nSyntaxError: /var/www/ambar/resources/js/components/order/OrderItemList.vue: Unexpected token, expected \";\" (43:50)\n\n\u001b[0m \u001b[90m 41 | \u001b[39m            \u001b[36mreturn\u001b[39m \u001b[36mthis\u001b[39m\u001b[33m.\u001b[39mitems\u001b[33m.\u001b[39mreduce((a\u001b[33m,\u001b[39m b) \u001b[33m=>\u001b[39m {\u001b[0m\n\u001b[0m \u001b[90m 42 | \u001b[39m                console\u001b[33m.\u001b[39mlog(b[\u001b[32m'subtotal'\u001b[39m])\u001b[0m\n\u001b[0m\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 43 | \u001b[39m                \u001b[36mreturn\u001b[39m a \u001b[33m+\u001b[39m (b[\u001b[32m'subtotal'\u001b[39m] \u001b[33m||\u001b[39m \u001b[35m0\u001b[39m)\u001b[33m,\u001b[39m \u001b[35m0\u001b[39m)\u001b[0m\n\u001b[0m \u001b[90m    | \u001b[39m                                                  \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 44 | \u001b[39m            }\u001b[0m\n\u001b[0m \u001b[90m 45 | \u001b[39m        }\u001b[33m,\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 46 | \u001b[39m        total_formatted() {\u001b[0m\n    at Parser.raise (/var/www/ambar/node_modules/@babel/parser/lib/index.js:6325:17)\n    at Parser.unexpected (/var/www/ambar/node_modules/@babel/parser/lib/index.js:7642:16)\n    at Parser.semicolon (/var/www/ambar/node_modules/@babel/parser/lib/index.js:7624:40)\n    at Parser.parseReturnStatement (/var/www/ambar/node_modules/@babel/parser/lib/index.js:10199:12)\n    at Parser.parseStatementContent (/var/www/ambar/node_modules/@babel/parser/lib/index.js:9877:21)\n    at Parser.parseStatement (/var/www/ambar/node_modules/@babel/parser/lib/index.js:9829:17)\n    at Parser.parseBlockOrModuleBlockBody (/var/www/ambar/node_modules/@babel/parser/lib/index.js:10405:25)\n    at Parser.parseBlockBody (/var/www/ambar/node_modules/@babel/parser/lib/index.js:10392:10)\n    at Parser.parseBlock (/var/www/ambar/node_modules/@babel/parser/lib/index.js:10376:10)\n    at Parser.parseFunctionBody (/var/www/ambar/node_modules/@babel/parser/lib/index.js:9424:24)\n    at Parser.parseArrowExpression (/var/www/ambar/node_modules/@babel/parser/lib/index.js:9365:10)\n    at Parser.parseParenAndDistinguishExpression (/var/www/ambar/node_modules/@babel/parser/lib/index.js:9002:12)\n    at Parser.parseExprAtom (/var/www/ambar/node_modules/@babel/parser/lib/index.js:8762:21)\n    at Parser.parseExprSubscripts (/var/www/ambar/node_modules/@babel/parser/lib/index.js:8412:23)\n    at Parser.parseMaybeUnary (/var/www/ambar/node_modules/@babel/parser/lib/index.js:8392:21)\n    at Parser.parseExprOps (/var/www/ambar/node_modules/@babel/parser/lib/index.js:8267:23)\n    at Parser.parseMaybeConditional (/var/www/ambar/node_modules/@babel/parser/lib/index.js:8240:23)\n    at Parser.parseMaybeAssign (/var/www/ambar/node_modules/@babel/parser/lib/index.js:8187:21)\n    at Parser.parseExprListItem (/var/www/ambar/node_modules/@babel/parser/lib/index.js:9491:18)\n    at Parser.parseCallExpressionArguments (/var/www/ambar/node_modules/@babel/parser/lib/index.js:8621:22)\n    at Parser.parseSubscript (/var/www/ambar/node_modules/@babel/parser/lib/index.js:8514:29)\n    at Parser.parseSubscripts (/var/www/ambar/node_modules/@babel/parser/lib/index.js:8433:19)\n    at Parser.parseExprSubscripts (/var/www/ambar/node_modules/@babel/parser/lib/index.js:8422:17)\n    at Parser.parseMaybeUnary (/var/www/ambar/node_modules/@babel/parser/lib/index.js:8392:21)\n    at Parser.parseExprOps (/var/www/ambar/node_modules/@babel/parser/lib/index.js:8267:23)\n    at Parser.parseMaybeConditional (/var/www/ambar/node_modules/@babel/parser/lib/index.js:8240:23)\n    at Parser.parseMaybeAssign (/var/www/ambar/node_modules/@babel/parser/lib/index.js:8187:21)\n    at Parser.parseExpression (/var/www/ambar/node_modules/@babel/parser/lib/index.js:8135:23)\n    at Parser.parseReturnStatement (/var/www/ambar/node_modules/@babel/parser/lib/index.js:10198:28)\n    at Parser.parseStatementContent (/var/www/ambar/node_modules/@babel/parser/lib/index.js:9877:21)\n    at Parser.parseStatement (/var/www/ambar/node_modules/@babel/parser/lib/index.js:9829:17)\n    at Parser.parseBlockOrModuleBlockBody (/var/www/ambar/node_modules/@babel/parser/lib/index.js:10405:25)\n    at Parser.parseBlockBody (/var/www/ambar/node_modules/@babel/parser/lib/index.js:10392:10)\n    at Parser.parseBlock (/var/www/ambar/node_modules/@babel/parser/lib/index.js:10376:10)\n    at Parser.parseFunctionBody (/var/www/ambar/node_modules/@babel/parser/lib/index.js:9424:24)\n    at Parser.parseFunctionBodyAndFinish (/var/www/ambar/node_modules/@babel/parser/lib/index.js:9394:10)");
 
 /***/ }),
 

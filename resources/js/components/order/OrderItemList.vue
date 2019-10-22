@@ -38,7 +38,10 @@ export default {
     },
     computed: {
         total() {
-            return this.items.reduce((a, b) => a + (b['subtotal'] || 0), 0)
+            return this.items.reduce((a, b) => {
+                console.log(b['subtotal'])
+                return a + (b['subtotal'] || 0), 0)
+            }
         },
         total_formatted() {
             return numeral(this.total).format('$0,0.00')
