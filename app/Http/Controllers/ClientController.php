@@ -96,7 +96,13 @@ class ClientController extends Controller
      */
     public function destroy(Client $client)
     {
-        $this->repository->delete($client);
+        if ($client->has_debt) {
+            return back()->withMessage('El cliente no se puede eliminar porque tiene pedidos con deuda.');
+        }
+        else {
+            $this->repository->delete($client);
+        }
+
         return redirect(route('clients.index'));
     }
 }
