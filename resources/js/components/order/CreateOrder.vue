@@ -41,6 +41,7 @@
                 @update-item="updateItem"
                 @remove-item="removeItem"
                 @update-total="updateTotal"
+                @update-payment-amount="updatePaymentAmount"
                 @update-weight="updateWeight"
                 @update-items-below-cost="updateItemsBelowCost"
             ></order-item-list>
@@ -201,6 +202,9 @@ export default {
         },
         updateTotal(value) {
             this.form.total = value
+        },
+        updatePaymentAmount(value) {
+            this.form.payment_amount = value
         },
         updateItemsBelowCost(value) {
             this.items_below_cost = value
