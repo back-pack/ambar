@@ -46,7 +46,7 @@ class OrderArticle extends Model
 
     public function getSubtotalAttribute()
     {
-        return ($this->price * $this->quantity) - (($this->discount * ($this->price * $this->quantity)) / 100);
+        return $this->touched_price * $this->quantity;
     }
 
     public function getProfitAttribute()
