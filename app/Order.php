@@ -90,7 +90,7 @@ class Order extends Model
 
     public function getHasDebtAttribute()
     {
-        return $this->total != $this->payments->sum('amount');
+        return $this->total > $this->payments->sum('amount');
     }
 
     public function getDebtAttribute()

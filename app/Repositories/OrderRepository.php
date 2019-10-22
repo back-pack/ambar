@@ -59,10 +59,12 @@ class OrderRepository
 
                 $orders_with_debt = $client->orders->filter->has_debt;
 
-                $i = 0;
+                // $orders_with_debt = $orders_with_debt->toArray();
 
-                while ($payment_amount != 0) {
-                    $order_with_debt = $orders_with_debt[$i];
+                $orders_with_debt->each(function ($order_with_debt) use ($payment_amount, $attributes) {
+                    if ($payment_amount == 0) {
+                        return false;
+                    }
 
                     if ($payment_amount <= $order_with_debt->debt) {
                         $amount = $payment_amount;
@@ -78,8 +80,29 @@ class OrderRepository
                     ]);
 
                     $payment_amount -= $amount;
-                    $i++;
-                }
+                });
+
+                // $i = 0;
+                //
+                // while ($payment_amount != 0) {
+                //     $order_with_debt = $orders_with_debt[$i];
+                //
+                //     if ($payment_amount <= $order_with_debt->debt) {
+                //         $amount = $payment_amount;
+                //     }
+                //     else {
+                //         $amount = $order_with_debt->debt;
+                //     }
+                //
+                //     \App\Payment::create([
+                //         'client_id' => $attributes['client_id'],
+                //         'order_id' => $order_with_debt->id,
+                //         'amount' => $amount
+                //     ]);
+                //
+                //     $payment_amount -= $amount;
+                //     $i++;
+                // }
 
             }
 
