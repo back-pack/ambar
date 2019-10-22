@@ -8,7 +8,7 @@
 
         <div class="collapse navbar-collapse" id="top-navbar-menu">
             <ul class="navbar-nav mr-auto">
-                @nav_item(['href' => route('orders.index', ['delivery' => 1, 'created_at' => now()->format('Y-m-d')]), 'url' => 'orders', 'text' => 'Pedidos'])
+                @nav_item(['href' => route('orders.index', ['delivery' => 0, 'created_at' => now()->format('Y-m-d')]), 'url' => 'orders', 'text' => 'Pedidos'])
                 @nav_item(['href' => route('orders.create'), 'url' => 'orders/create', 'text' => 'Ingresar pedido'])
                 @nav_item(['href' => route('articles.index'), 'url' => 'articles', 'text' => 'Artículos'])
                 @nav_item(['href' => route('categories.index'), 'url' => 'categories', 'text' => 'Categorias'])

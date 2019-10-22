@@ -18,7 +18,7 @@
             @select([
                 'name' => 'delivery',
                 'label' => 'Entrega',
-                'options' => [['', 'Todos'], [1, 'Inmediata']],
+                'options' => [['', 'Todos'], [0, 'Inmediata'], [1, 'Calle']],
                 'value' => request()->query('delivery'),
                 'classes' => ['label' => 'mb-2 mr-2', 'select' => 'mb-2 mr-2']
             ])
