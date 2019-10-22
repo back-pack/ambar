@@ -6,6 +6,8 @@
 
 @section('content')
 
+    @include('components.message')
+
     <form method="post" action="{{ route('clients.update', ['id' => $client->id]) }}">
         @csrf
         @method('patch')
