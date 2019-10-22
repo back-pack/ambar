@@ -2704,8 +2704,8 @@ __webpack_require__.r(__webpack_exports__);
   },
   computed: {
     total: function total() {
-      return this.items.reduce(function (sum, item) {
-        return sum + (item.subtotal || 0);
+      return this.items.reduce(function (t, item) {
+        return t + (item.subtotal || 0);
       }, 0);
     },
     total_formatted: function total_formatted() {
