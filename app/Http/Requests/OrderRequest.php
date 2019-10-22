@@ -50,7 +50,7 @@ class OrderRequest extends FormRequest
         $validator->after(function ($validator) {
             $client = \App\Client::findOrFail($this->client_id);
 
-            if ($this->payment_amount > $client->debt)
+            if ($this->payment_amount > $client->debt + $this->total)
             {
                 $validator->errors()->add('payment_amount', 'El monto del pago excede a la deuda del cliente.');
             }
