@@ -2009,7 +2009,9 @@ __webpack_require__.r(__webpack_exports__);
       var data = _ref.data;
       _this.clients = data.data;
 
-      _this.updateValue(_this.clients[0].id);
+      if (_this.value == 1) {
+        _this.updateValue(_this.clients[0].id);
+      }
     })["finally"](function () {
       return _this.loading = false;
     });
