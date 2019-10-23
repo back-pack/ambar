@@ -13,8 +13,6 @@
     <p>Cliente: {{ $order->client->name }}</p>
     <p>Entrega: {{ $order->deliveryFormatted }}</p>
     <p>Pagado: {{ number_readable($order->payments->sum('amount'), "$") }} de {{ number_readable($order->total, "$") }}</p>
-    <p>Deuda anterior: {{ number_readable($order->client->debt + $order->payments->sum('amount'), "$") }}</p>
-    <p>Deuda actual: {{ number_readable($order->client->debt, "$") }}</p>
     <table class="table table-hover">
         <thead class="thead-light">
             <tr>
@@ -46,6 +44,11 @@
     </table>
 
     <p>{{ $order->detail }}</p>
+
+    <div class="float-right">
+        <p>Deuda anterior: {{ number_readable($order->client->debt + $order->payments->sum('amount'), "$") }}</p>
+        <p>Deuda actual: {{ number_readable($order->client->debt, "$") }}</p>
+    </div>
 
     <p>Peso total: {{ number_readable($order->weight, null, "kg") }}</p>
 
