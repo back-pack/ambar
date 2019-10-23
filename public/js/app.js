@@ -2107,6 +2107,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -2127,6 +2129,7 @@ __webpack_require__.r(__webpack_exports__);
       client_debt: 0,
       updating_debt: false,
       items_below_cost: false,
+      enter_payment: false,
       system_error: null
     };
   },
@@ -2727,8 +2730,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   watch: {
     total: function total(value) {
-      this.$emit('update-total', value);
-      this.$emit('update-payment-amount', value);
+      this.$emit('update-total', value); // this.$emit('update-payment-amount', value)
     },
     weight: function weight(value) {
       this.$emit('update-weight', value);
@@ -2827,6 +2829,10 @@ __webpack_require__.r(__webpack_exports__);
     show: function show(value) {
       if (value === false) {
         this.updateValue(0);
+      }
+
+      if (value === true) {
+        this.$emit('enter-payment');
       }
     }
   }
@@ -3036,6 +3042,14 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -3054,7 +3068,8 @@ __webpack_require__.r(__webpack_exports__);
       },
       form: new _classes_Form__WEBPACK_IMPORTED_MODULE_1__["default"]({
         client_id: 1,
-        amount: 0.00
+        amount: 0.00,
+        order_id: 1
       }),
       system_error: null
     };
@@ -3068,6 +3083,7 @@ __webpack_require__.r(__webpack_exports__);
       _this.payment = data.data;
       _this.form.client_id = data.data.client.id;
       _this.form.amount = parseFloat(data.data.amount);
+      _this.form.order_id = data.data.order.id;
     })["catch"](function (data) {
       if (!data.errors) {
         _this.system_error = data;
@@ -39776,6 +39792,11 @@ var render = function() {
             client_debt: _vm.client_debt_total,
             updating_debt: _vm.updating_debt
           },
+          on: {
+            "enter-payment": function($event) {
+              return _vm.updatePaymentAmount(_vm.form.total)
+            }
+          },
           model: {
             value: _vm.form.payment_amount,
             callback: function($$v) {
@@ -40760,7 +40781,9 @@ var render = function() {
                     expression: "form.amount"
                   }
                 ],
-                staticClass: "form-control",
+                class: _vm.form.errors.has("amount")
+                  ? "form-control is-invalid"
+                  : "form-control",
                 attrs: {
                   type: "number",
                   step: "any",
@@ -40776,6 +40799,11 @@ var render = function() {
                     _vm.$set(_vm.form, "amount", $event.target.value)
                   }
                 }
+              }),
+              _vm._v(" "),
+              _c("span", {
+                staticClass: "invalid-feedback",
+                domProps: { textContent: _vm._s(_vm.form.errors.get("amount")) }
               })
             ])
           ]),

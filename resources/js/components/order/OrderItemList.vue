@@ -54,7 +54,7 @@ export default {
     watch: {
         total(value) {
             this.$emit('update-total', value)
-            this.$emit('update-payment-amount', value)
+            // this.$emit('update-payment-amount', value)
         },
         weight(value) {
             this.$emit('update-weight', value)

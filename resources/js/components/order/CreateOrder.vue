@@ -56,6 +56,8 @@
                 :errors="form.errors"
                 :client_debt="client_debt_total"
                 :updating_debt="updating_debt"
+                @enter-payment="updatePaymentAmount(form.total)"
+
             ></payment-input>
 
             <system-error :error="system_error" @remove-error="clearSystemError"></system-error>
@@ -88,6 +90,7 @@ export default {
             client_debt: 0,
             updating_debt: false,
             items_below_cost: false,
+            enter_payment: false,
             system_error: null,
         }
     },

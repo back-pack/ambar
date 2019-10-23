@@ -68,6 +68,9 @@ export default {
             if (value === false) {
                 this.updateValue(0)
             }
+            if (value === true) {
+                this.$emit('enter-payment')
+            }
         }
     }
 }
