@@ -46,7 +46,7 @@
     <p>{{ $order->detail }}</p>
 
     <div class="float-right">
-        <p>Deuda anterior: {{ number_readable($order->client->debt + $order->payments->sum('amount'), "$") }}</p>
+        <p>Deuda anterior: {{ number_readable($order->client->debt - $order->debt, "$") }}</p>
         <p>Deuda actual: {{ number_readable($order->client->debt, "$") }}</p>
     </div>
 
