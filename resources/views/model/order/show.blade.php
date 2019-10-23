@@ -6,6 +6,8 @@
 
 @section('content')
 
+    <img src="/img/articles_list_client_pdf_header.png" style="width: 100%" alt="">
+
     <h3>Pedido Nro {{ $order->id }}</h3>
     <hr>
     <p>Cliente: {{ $order->client->name }}</p>
