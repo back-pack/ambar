@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Payment;
 use App\Repositories\PaymentRepository;
-use App\Http\Requests\PaymentRequest;
+use App\Http\Requests\PaymentStoreRequest;
+use App\Http\Requests\PaymentUpdateRequest;
 use Illuminate\Http\Request;
 
 class PaymentController extends Controller
@@ -43,7 +44,7 @@ class PaymentController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(PaymentRequest $request)
+    public function store(PaymentStoreRequest $request)
     {
         $attributes = $request->validated();
 
@@ -53,27 +54,48 @@ class PaymentController extends Controller
 
         $orders_with_debt = $client->orders->filter->has_debt;
 
-        $i = 0;
+        $orders_with_debt->each(function ($order_with_debt) use ($payment_amount, $attributes) {
+            if ($payment_amount == 0) {
+                return false;
+            }
 
-        while ($payment_amount != 0) {
-            $order = $orders_with_debt[$i];
-
-            if ($payment_amount <= $order->debt) {
+            if ($payment_amount <= $order_with_debt->debt) {
                 $amount = $payment_amount;
             }
             else {
-                $amount = $order->debt;
+                $amount = $order_with_debt->debt;
             }
 
             \App\Payment::create([
                 'client_id' => $attributes['client_id'],
-                'order_id' => $order->id,
+                'order_id' => $order_with_debt->id,
                 'amount' => $amount
             ]);
 
             $payment_amount -= $amount;
-            $i++;
-        }
+        });
+
+        // $i = 0;
+        //
+        // while ($payment_amount != 0) {
+        //     $order = $orders_with_debt[$i];
+        //
+        //     if ($payment_amount <= $order->debt) {
+        //         $amount = $payment_amount;
+        //     }
+        //     else {
+        //         $amount = $order->debt;
+        //     }
+        //
+        //     \App\Payment::create([
+        //         'client_id' => $attributes['client_id'],
+        //         'order_id' => $order->id,
+        //         'amount' => $amount
+        //     ]);
+        //
+        //     $payment_amount -= $amount;
+        //     $i++;
+        // }
 
         return $client;
     }
@@ -107,7 +129,7 @@ class PaymentController extends Controller
      * @param  \App\Payment  $payment
      * @return \Illuminate\Http\Response
      */
-    public function update(PaymentRequest $request, Payment $payment)
+    public function update(PaymentUpdateRequest $request, Payment $payment)
     {
         $payment = $this->repository->update($request, $payment);
 
