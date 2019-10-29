@@ -16,6 +16,7 @@ class Order extends JsonResource
     public function toArray($request)
     {
         return [
+            'id' => $this->id,
             'client_id' => $this->client_id,
             'delivery' => $this->delivery !== null ? $this->delivery->format('Y-m-d') : null,
             'articles' => OrderArticleResource::collection($this->articles),
