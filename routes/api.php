@@ -34,7 +34,7 @@ Route::middleware(['auth:api'])->group(function () {
 
     Route::get('articles', function (Request $request) {
 
-        if ($request->query('search')) {
+        if ($request->has('search')) {
             $articles = Article::where('name', 'like', $request->query('search').'%')->take(15)->get();
         } else {
             $articles = Article::all();
@@ -49,6 +49,10 @@ Route::middleware(['auth:api'])->group(function () {
 
     Route::get('clients', function (Request $request) {
         $clients = Client::all();
+
+        if ($request->has('search')) {
+            $clients = Client::where('name', 'like', $request->query('search').'%')->take(15)->get();
+        }
 
         if ($request->has('with-debt') && $request->query('with-debt') == '1') {
             $clients = $clients->filter->has_debt;
