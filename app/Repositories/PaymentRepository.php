@@ -3,7 +3,8 @@
 namespace App\Repositories;
 
 use App\Payment;
-use App\Http\Requests\PaymentRequest;
+use App\Http\Requests\PaymentStoreRequest;
+use App\Http\Requests\PaymentUpdateRequest;
 
 class PaymentRepository
 {
@@ -12,14 +13,14 @@ class PaymentRepository
         return Payment::paginate(config('pagination.model.payment'));
     }
 
-    public function create(PaymentRequest $request): Payment
+    public function create(PaymentStoreRequest $request): Payment
     {
         $attributes = $request->validated();
 
         return Payment::create($attributes);
     }
 
-    public function update(PaymentRequest $request, Payment $payment): Payment
+    public function update(PaymentUpdateRequest $request, Payment $payment): Payment
     {
         $attributes = $request->validated();
 
