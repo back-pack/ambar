@@ -49,10 +49,10 @@
         </thead>
         <tfoot class="thead-light">
             <th colspan="5"></th>
-            <th>{{ number_readable($orders->sum('total'), "$") }}</th>
+            <th><h4>{{ number_readable($orders->sum('total'), "$") }}</h4></th>
             <th class="config" colspan="1"></th>
             @if (auth()->user()->is_admin)
-                <th class="profit collapse">{{ number_readable($orders->sum('profit'), "$") }}</th>
+                <th class="profit collapse"><h4>{{ number_readable($orders->sum('profit'), "$") }}</h4></th>
             @endif
             <th colspan="1"></th>
         </tfoot>
