@@ -17,7 +17,8 @@ class PaymentResource extends JsonResource
         return [
             'id' => $this->id,
             'amount' => floatval($this->amount),
-            'client' => new Client($this->client)
+            'client' => new Client($this->client),
+            'order' => new Order($this->order),
         ];
     }
 }
