@@ -1,9 +1,9 @@
 <template>
     <form class="needs-validation" @keydown="form.errors.clear($event.target.name)">
 
-        <client-select
+        <client-input
             v-model="form.client_id"
-        ></client-select>
+        ></client-input>
 
         <delivery-switch
             v-model="form.delivery"

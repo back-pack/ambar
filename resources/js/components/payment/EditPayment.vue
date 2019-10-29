@@ -13,7 +13,15 @@
                     <div class="input-group-prepend">
                         <div class="input-group-text">$</div>
                     </div>
-                    <input class="form-control" type="number" v-model="form.amount" step="any" min="0" :max="payment.client.debt + payment.amount">
+                    <input
+                         :class="form.errors.has('amount') ? 'form-control is-invalid' : 'form-control'"
+                         type="number"
+                         v-model="form.amount"
+                         step="any"
+                         min="0"
+                         :max="payment.client.debt + payment.amount"
+                     >
+                     <span class="invalid-feedback" v-text="form.errors.get('amount')"></span>
                 </div>
             </div>
 
@@ -49,7 +57,8 @@ export default {
             },
             form: new Form({
                 client_id: 1,
-                amount: 0.00
+                amount: 0.00,
+                order_id: 1
             }),
             system_error: null
         }
@@ -61,6 +70,7 @@ export default {
                 this.payment = data.data
                 this.form.client_id = data.data.client.id
                 this.form.amount = parseFloat(data.data.amount)
+                this.form.order_id = data.data.order.id
             })
             .catch(data => {
                 if (!data.errors) {
