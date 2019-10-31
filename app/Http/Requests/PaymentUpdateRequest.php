@@ -35,8 +35,10 @@ class PaymentUpdateRequest extends FormRequest
         $validator->after(function ($validator) {
             $order = \App\Order::findOrFail($this->order_id);
 
-            if ($this->amount > $order->total) {
-                $validator->errors()->add('amount', "El monto excede al monto total del pedido.");
+            $payment = request()->route('payment');
+
+            if ($this->amount > $order->debt + $payment->amount) {
+                $validator->errors()->add('amount', "El monto excede a la deuda del pedido.");
             }
         });
     }
