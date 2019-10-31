@@ -5,7 +5,10 @@
                 Cliente: <b>{{ payment.client.name }}</b>
             </div>
             <div class="form-group">
-                <div>El cliente debe: <b>{{ money_format(payment.client.debt) }}</b></div>
+                Pago correspondiente al pedido <b>#{{ payment.order.id }}</b>
+            </div>
+            <div class="form-group">
+                <div>Deuda del pedido: <b>{{ money_format(payment.order.debt + payment.amount) }}</b></div>
             </div>
 
             <div class="form-group">
@@ -27,7 +30,7 @@
 
 
             <div class="form-group">
-                <div>El cliente deberá: <b>{{ money_format(payment.client.debt + payment.amount - form.amount) }}</b></div>
+                <div>Restara pagar: <b>{{ money_format(payment.order.debt + payment.amount - form.amount) }}</b></div>
             </div>
 
             <system-error :error="system_error" @remove-error="clearSystemError"></system-error>
