@@ -22,6 +22,7 @@ class Order extends JsonResource
             'articles' => OrderArticleResource::collection($this->articles),
             'detail' => $this->detail,
             'total' => floatval($this->total),
+            'debt' => floatval($this->debt),
             'weight' => floatval($this->weight)
         ];
     }
