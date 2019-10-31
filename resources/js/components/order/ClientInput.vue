@@ -32,7 +32,10 @@ export default {
     },
     methods: {
         getClients() {
-            this.items = this.data.filter(item => item.name.includes(this.term))
+            this.items = this.data.filter(item => {
+                let patt = new RegExp(this.term, 'gi')
+                return patt.test(item.name)
+            })
         },
         updateValue(item) {
             this.$emit('input', item.id)
