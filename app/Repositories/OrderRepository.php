@@ -24,12 +24,12 @@ class OrderRepository
                 'article_id' => $order_item['article']['id'],
                 'quantity' => $order_item['quantity'],
                 'discount' => $order_item['discount'],
-                'price' => $order_item['price'],
+                'price' => $order_item['article']['price'],
                 'touched_price' => $order_item['touched_price'],
                 'is_below_cost' => $order_item['is_below_cost'],
-                'name' =>  $order_item['name'],
-                'cost' =>  $order_item['cost'],
-                'weight' =>  $order_item['weight'],
+                'name' =>  $order_item['article']['name'],
+                'cost' =>  $order_item['article']['cost'],
+                'weight' =>  $order_item['article']['weight'],
             ]);
             $order->articles()->save($order_article);
         }
@@ -59,50 +59,26 @@ class OrderRepository
 
                 $orders_with_debt = $client->orders->filter->has_debt;
 
-                // $orders_with_debt = $orders_with_debt->toArray();
-
-                $orders_with_debt->each(function ($order_with_debt) use ($payment_amount, $attributes) {
+                foreach ($orders_with_debt as $order_with_debt) {
                     if ($payment_amount == 0) {
-                        return false;
-                    }
+                            break;
+                        }
 
-                    if ($payment_amount <= $order_with_debt->debt) {
-                        $amount = $payment_amount;
-                    }
-                    else {
-                        $amount = $order_with_debt->debt;
-                    }
+                        if ($payment_amount <= $order_with_debt->debt) {
+                            $amount = $payment_amount;
+                        }
+                        else {
+                            $amount = $order_with_debt->debt;
+                        }
 
-                    \App\Payment::create([
-                        'client_id' => $attributes['client_id'],
-                        'order_id' => $order_with_debt->id,
-                        'amount' => $amount
-                    ]);
+                        \App\Payment::create([
+                            'client_id' => $client->id,
+                            'order_id' => $order_with_debt->id,
+                            'amount' => $amount
+                        ]);
 
-                    $payment_amount -= $amount;
-                });
-
-                // $i = 0;
-                //
-                // while ($payment_amount != 0) {
-                //     $order_with_debt = $orders_with_debt[$i];
-                //
-                //     if ($payment_amount <= $order_with_debt->debt) {
-                //         $amount = $payment_amount;
-                //     }
-                //     else {
-                //         $amount = $order_with_debt->debt;
-                //     }
-                //
-                //     \App\Payment::create([
-                //         'client_id' => $attributes['client_id'],
-                //         'order_id' => $order_with_debt->id,
-                //         'amount' => $amount
-                //     ]);
-                //
-                //     $payment_amount -= $amount;
-                //     $i++;
-                // }
+                        $payment_amount -= $amount;
+                }
 
             }
 
