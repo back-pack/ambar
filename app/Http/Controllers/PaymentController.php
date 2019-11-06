@@ -54,48 +54,26 @@ class PaymentController extends Controller
 
         $orders_with_debt = $client->orders->filter->has_debt;
 
-        $orders_with_debt->each(function ($order_with_debt) use ($payment_amount, $attributes) {
+        foreach ($orders_with_debt as $order_with_debt) {
             if ($payment_amount == 0) {
-                return false;
-            }
+                    break;
+                }
 
-            if ($payment_amount <= $order_with_debt->debt) {
-                $amount = $payment_amount;
-            }
-            else {
-                $amount = $order_with_debt->debt;
-            }
+                if ($payment_amount <= $order_with_debt->debt) {
+                    $amount = $payment_amount;
+                }
+                else {
+                    $amount = $order_with_debt->debt;
+                }
 
-            \App\Payment::create([
-                'client_id' => $attributes['client_id'],
-                'order_id' => $order_with_debt->id,
-                'amount' => $amount
-            ]);
+                \App\Payment::create([
+                    'client_id' => $client->id,
+                    'order_id' => $order_with_debt->id,
+                    'amount' => $amount
+                ]);
 
-            $payment_amount -= $amount;
-        });
-
-        // $i = 0;
-        //
-        // while ($payment_amount != 0) {
-        //     $order = $orders_with_debt[$i];
-        //
-        //     if ($payment_amount <= $order->debt) {
-        //         $amount = $payment_amount;
-        //     }
-        //     else {
-        //         $amount = $order->debt;
-        //     }
-        //
-        //     \App\Payment::create([
-        //         'client_id' => $attributes['client_id'],
-        //         'order_id' => $order->id,
-        //         'amount' => $amount
-        //     ]);
-        //
-        //     $payment_amount -= $amount;
-        //     $i++;
-        // }
+                $payment_amount -= $amount;
+        }
 
         return $client;
     }
