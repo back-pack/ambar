@@ -17,7 +17,9 @@ class PaymentRepository
     {
         $attributes = $request->validated();
 
-        return Payment::create($attributes);
+        $payment = Payment::create($attributes);
+
+        return $payment;
     }
 
     public function update(PaymentUpdateRequest $request, Payment $payment): Payment
